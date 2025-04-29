@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 142580005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.93, z: 0}
+  m_LocalPosition: {x: 0, y: 4.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1072,7 +1072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2052748420
 Transform:
   m_ObjectHideFlags: 0
@@ -1081,8 +1081,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052748419}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5851}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.459999, z: 1.5850987}
   m_LocalScale: {x: 5.46, y: 1, z: 7.8860793}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1266,7 +1266,7 @@ MonoBehaviour:
   rotationSpeed: 5
   floor: {fileID: 142580006}
   bote: {fileID: 2052748420}
-  ropeColor: {r: 0, g: 0, b: 0, a: 1}
+  ropeColor: {r: 0.034243584, g: 0, b: 1, a: 1}
   ropeLength: 10
   deploySpeed: 2
 --- !u!1 &4166604920282626498
@@ -1295,7 +1295,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4166604920282626496}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

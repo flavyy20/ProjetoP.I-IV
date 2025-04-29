@@ -34,6 +34,7 @@ public class Helicopter : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.startWidth = lineRenderer.endWidth = lineWidth;
         lineRenderer.positionCount = segments;
+        material.color = circleColor;
     }
 
     private void Update()
@@ -51,11 +52,6 @@ public class Helicopter : MonoBehaviour
         }
     }
 
-    private void OnApplicationFocus(bool focus)
-    {
-        if (toggle) lineRenderer.enabled = focus;
-    }
-
     void SetDestination(Vector3 position)
     {
         if (moving) return;
@@ -67,7 +63,6 @@ public class Helicopter : MonoBehaviour
         toggle = false;
         moving = true;
         target = transform;
-        material.color = ropeColor;
 
         // Rotaciona o heli para a posição
         Vector3 direction = (position - transform.position).normalized;
@@ -97,14 +92,15 @@ public class Helicopter : MonoBehaviour
 
         cam3.fieldOfView /= 2;
         target = bote;
-        bote.gameObject.SetActive(true);
+        material.color = ropeColor;
 
         while (currentLength < ropeLength)
         {
             currentLength += deploySpeed * Time.deltaTime;
             currentLength = Mathf.Min(currentLength, ropeLength);
-            bote.position = transform.position + Vector3.down * currentLength;
-            UpdateRope();
+            bote.position = floor.position + Vector3.down * currentLength;
+            //UpdateRope();
+            UpdateRopePositions();
             yield return null;
         }
 
@@ -113,11 +109,11 @@ public class Helicopter : MonoBehaviour
         cam1.enabled = true;
         cam3.enabled = false;
         cam3.fieldOfView *= 2;
+        lineRenderer.enabled = false;
     }
 
     void Raycast()
     {
-        lineRenderer.enabled = toggle;
         if (moving) material.color = circleColor;
 
         if (toggle && switchCamera)
@@ -154,7 +150,7 @@ public class Helicopter : MonoBehaviour
 
     void UpdateRope()
     {
-        Vector3 startPoint = transform.position;
+        Vector3 startPoint = floor.position;
         Vector3 endPoint = bote.position;
         Vector3[] ropePositions = new Vector3[segments];
 
@@ -168,6 +164,21 @@ public class Helicopter : MonoBehaviour
 
         lineRenderer.SetPositions(ropePositions);
     }
+    void UpdateRopePositions()
+    {
+        Vector3 startPoint = floor.position;
+        Vector3[] ropePositions = new Vector3[segments];
+
+        for (int i = 0; i < segments; i++)
+        {
+            float t = (float)i / (segments - 1);
+            float height = t * currentLength;
+            ropePositions[i] = startPoint + Vector3.down * height;
+        }
+
+        lineRenderer.SetPositions(ropePositions);
+    }
+
 
     void ButtonsFunc()
     {
@@ -175,6 +186,7 @@ public class Helicopter : MonoBehaviour
         {
             switchCamera = true;
             toggle = switchCamera;
+            lineRenderer.enabled = true;
         }
     }
 
