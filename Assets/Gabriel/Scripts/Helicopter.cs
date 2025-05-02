@@ -66,8 +66,13 @@ public class Helicopter : MonoBehaviour
         target = transform;
 
         // Rotaciona o heli para a posição
-        Vector3 direction = (position - transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+        Vector3 direction = (position - transform.position);
+        Vector3 normalDirection = new Vector3(direction.x, direction.y / 3, direction.z).normalized;
+
+        if (DistanceWithoutHeight(position, transform.position) <= 15f)
+            normalDirection = new Vector3(direction.x, 0f, direction.z).normalized;
+
+        Quaternion targetRotation = Quaternion.LookRotation(normalDirection, Vector3.up);
 
         while (Quaternion.Angle(transform.rotation, targetRotation) > 0.5f)
         {
@@ -100,8 +105,6 @@ public class Helicopter : MonoBehaviour
 
         if (Physics.SphereCast(floor.position, raio, Vector3.down, out RaycastHit hit, Mathf.Infinity, npcMask))
             groundDistance = hit.distance - offset;
-
-        print(groundDistance);
 
         while (currentLength < groundDistance)
         {
