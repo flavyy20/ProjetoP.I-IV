@@ -21,11 +21,12 @@ public class Helicopter : MonoBehaviour
     [SerializeField] float speed = 2f, rotationSpeed = 5f;
     [SerializeField] Transform floor, bote;
     [SerializeField] Color ropeColor = Color.black;
+    [SerializeField] LayerMask groundMask, npcMask;
 
     Transform target;
 
     private float currentLength = 0f;
-    public float ropeLength = 10f, deploySpeed = 2f;
+    public float deploySpeed = 2f;
 
     bool moving;
 
@@ -94,19 +95,28 @@ public class Helicopter : MonoBehaviour
         target = bote;
         material.color = ropeColor;
 
-        while (currentLength < ropeLength)
+        float groundDistance = 0f,
+              offset = bote.localScale.y/2;
+
+        if (Physics.SphereCast(floor.position, raio, Vector3.down, out RaycastHit hit, Mathf.Infinity, npcMask))
+            groundDistance = hit.distance - offset;
+
+        print(groundDistance);
+
+        while (currentLength < groundDistance)
         {
             currentLength += deploySpeed * Time.deltaTime;
-            currentLength = Mathf.Min(currentLength, ropeLength);
+            currentLength = Mathf.Min(currentLength, groundDistance);
             bote.position = floor.position + Vector3.down * currentLength;
-            //UpdateRope();
-            UpdateRopePositions();
+            UpdateRope();
             yield return null;
         }
 
         moving = false;
+        switchCamera = false;
         yield return null;
-        cam1.enabled = true;
+        cam1.enabled = false;
+        cam2.enabled = false;
         cam3.enabled = false;
         cam3.fieldOfView *= 2;
         lineRenderer.enabled = false;
@@ -126,6 +136,12 @@ public class Helicopter : MonoBehaviour
             {
                 Vector3 worldPos = ray.GetPoint(distance);
                 DrawCircle(worldPos);
+                Collider[] hits = Physics.OverlapSphere(worldPos, raio, npcMask);
+                if (hits.Length > 0)
+                {
+                    foreach (var item in hits)
+                        print(item.name);
+                }
                 if (Input.GetMouseButtonDown(0))
                     SetDestination(worldPos);
             }
@@ -154,8 +170,6 @@ public class Helicopter : MonoBehaviour
         Vector3 endPoint = bote.position;
         Vector3[] ropePositions = new Vector3[segments];
 
-        print($"startPoint: {startPoint}, endPoint: {endPoint}");
-
         for (int i = 0; i < segments; i++)
         {
             float t = (float)i / (segments - 1);
@@ -164,21 +178,6 @@ public class Helicopter : MonoBehaviour
 
         lineRenderer.SetPositions(ropePositions);
     }
-    void UpdateRopePositions()
-    {
-        Vector3 startPoint = floor.position;
-        Vector3[] ropePositions = new Vector3[segments];
-
-        for (int i = 0; i < segments; i++)
-        {
-            float t = (float)i / (segments - 1);
-            float height = t * currentLength;
-            ropePositions[i] = startPoint + Vector3.down * height;
-        }
-
-        lineRenderer.SetPositions(ropePositions);
-    }
-
 
     void ButtonsFunc()
     {
