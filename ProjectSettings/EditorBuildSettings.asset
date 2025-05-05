@@ -4,5 +4,15 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Samuel/Scenes/TelaIInicio.unity
+    guid: 3c35d2704fe4cab4b8c9ccf413790a60
+  - enabled: 1
+    path: Assets/Samuel/Scenes/Mina.unity
+    guid: 1a38cb39c402c174fa7726501b6e2d83
+  - enabled: 1
+    path: Assets/Samuel/Scenes/Baco.unity
+    guid: 7425ec66bba283344b82da536ef1e147
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
