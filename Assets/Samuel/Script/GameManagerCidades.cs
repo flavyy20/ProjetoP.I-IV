@@ -83,6 +83,48 @@ public class GameManagerCidades : MonoBehaviour
         {
             progressBars[i].value = cities[i].progress;
         }
+
+        //if (progressBars == null || progressBars.Length != cities.Length) return;
+
+        //for (int i = 0; i < cities.Length; i++)
+        //{
+        //    if (progressBars[i] != null)
+        //    {
+        //        progressBars[i].value = cities[i].progress;
+        //    }
+        //}
+
+    }
+
+    private void UpdateProgressBarsReferences()
+    {
+        // Só procura os sliders se estiver na cena inicial
+        if (SceneManager.GetActiveScene().name == "TelaIInicio")
+        {
+            // Encontra o objeto pai dos sliders (ajuste o nome conforme sua hierarquia)
+            GameObject progressBarsParent = GameObject.Find("ProgressBarsContainer");
+
+            if (progressBarsParent != null)
+            {
+                progressBars = progressBarsParent.GetComponentsInChildren<Slider>(true);
+
+                // Verifica se encontrou a quantidade certa de sliders
+                if (progressBars.Length != cities.Length)
+                {
+                    Debug.LogError($"Encontrados {progressBars.Length} sliders, mas precisamos de {cities.Length}");
+                    progressBars = null;
+                }
+            }
+            else
+            {
+                Debug.LogError("Container dos ProgressBars não encontrado na cena!");
+                progressBars = null;
+            }
+        }
+        else
+        {
+            progressBars = null;
+        }
     }
 
     private IEnumerator ScheduleNextEvent(CityState city)
@@ -131,7 +173,7 @@ public class GameManagerCidades : MonoBehaviour
     public void ReturnToMain()
     {
         currentCity = null; // Volta para a tela inicial
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TelaIInicio");
     }
     public void TriggerGlobalAlert(string message)
     {
@@ -180,28 +222,40 @@ public class GameManagerCidades : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Atualiza referências ao carregar uma nova cena
         UpdateCityAlertReference();
         UpdateGlobalAlert();
+        //UpdateProgressBars();
+        UpdateProgressBarsReferences();
     }
 
     private void UpdateCityAlertReference()
     {
-        // Tenta encontrar o objeto "CityAlertText" na cena atual
-        cityAlertText = GameObject.Find("CityAlertText")?.GetComponent<Text>();
-        if (cityAlertText == null)
+        // Procura pelo objeto "CityAlertText" na nova cena
+        GameObject cityAlertObject = GameObject.Find("CityAlertText");
+        if (cityAlertObject != null)
+        {
+            cityAlertText = cityAlertObject.GetComponent<Text>();
+        }
+        else
         {
             Debug.LogWarning("CityAlertText não encontrado na cena atual.");
+            cityAlertText = null; // Evita erros de referência
         }
     }
 
-
     private void UpdateGlobalAlert()
     {
-        // Tenta encontrar o objeto "CityAlertText" na cena atual
-        globalAlertText = GameObject.Find("GlobalTextAlert")?.GetComponent<Text>();
-        if (globalAlertText == null)
+        // Procura pelo objeto "GlobalTextAlert" na nova cena
+        GameObject globalAlertObject = GameObject.Find("GlobalTextAlert");
+        if (globalAlertObject != null)
         {
-            Debug.LogWarning("Global não encontrado na cena atual.");
+            globalAlertText = globalAlertObject.GetComponent<Text>();
+        }
+        else
+        {
+            Debug.LogWarning("GlobalTextAlert não encontrado na cena atual.");
+            globalAlertText = null; // Evita erros de referência
         }
     }
 }
