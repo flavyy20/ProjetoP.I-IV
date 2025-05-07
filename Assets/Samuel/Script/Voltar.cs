@@ -50,7 +50,7 @@ public class Voltar : MonoBehaviour
             {
                 if (GameManagerCidades.Instance != null)
                 {
-                    GameManagerCidades.Instance.EnterCity("Baco");
+                    GameManagerCidades.Instance.EnterCity("cenaTeste_GB");
                 }
                 else
                 {

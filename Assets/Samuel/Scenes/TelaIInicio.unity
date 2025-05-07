@@ -144,8 +144,8 @@ Transform:
   m_GameObject: {fileID: 39580790}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 632.23047, y: -713.43677, z: 4362.141}
-  m_LocalScale: {x: 9.353074, y: 9.353074, z: 9.353074}
+  m_LocalPosition: {x: 670.48303, y: -807.601, z: 4137.381}
+  m_LocalScale: {x: 8.389708, y: 8.389708, z: 8.389708}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1724549245}
@@ -216,7 +216,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74035725}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 224.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -225,8 +225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 270, y: 254.386}
-  m_SizeDelta: {x: 223.895, y: 265.194}
+  m_AnchoredPosition: {x: 333.22998, y: 60.487}
+  m_SizeDelta: {x: 200.823, y: 237.866}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &74035727
 MonoBehaviour:
@@ -557,7 +557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.070984, y: 0}
+  m_AnchoredPosition: {x: -2.071045, y: 0}
   m_SizeDelta: {x: 4.142, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &622282708
@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cities:
-  - cityName: Baco
+  - cityName: cenaTeste_GB
     progress: 0
     isEventActive: 0
   - cityName: Mina
@@ -1305,7 +1305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AAAAAAAAAAAAAAA
+  m_Text: 
 --- !u!222 &1555813568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1330,7 +1330,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -451.965, y: 372.095}
+  m_AnchoredPosition: {x: -328, y: 232}
   m_SizeDelta: {x: 366.07, y: 139.811}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1708626695
@@ -1369,7 +1369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.162506, y: 85.152405}
+  m_AnchoredPosition: {x: -40.1, y: 85.152405}
   m_SizeDelta: {x: 278.561, y: 34.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1708626697
@@ -1459,7 +1459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -69.84126, y: 85.152405}
+  m_AnchoredPosition: {x: -75.5, y: 85.152405}
   m_SizeDelta: {x: 278.561, y: 34.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1724549246
@@ -1561,11 +1561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1723,7 +1723,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888616772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 224.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1732,8 +1732,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.691, y: 254.386}
-  m_SizeDelta: {x: 223.895, y: 265.194}
+  m_AnchoredPosition: {x: 48, y: 60.487}
+  m_SizeDelta: {x: 200.823, y: 237.866}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1888616774
 MonoBehaviour:
@@ -1788,7 +1788,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Baco
+          m_StringArgument: cenaTeste_GB
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1888616775
@@ -1895,7 +1895,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AAAAAAAAAAAAAAA
+  m_Text: 
 --- !u!222 &1934428982
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1920,7 +1920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -451.965, y: 372.095}
+  m_AnchoredPosition: {x: -332, y: 73}
   m_SizeDelta: {x: 366.07, y: 139.811}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1968474309
