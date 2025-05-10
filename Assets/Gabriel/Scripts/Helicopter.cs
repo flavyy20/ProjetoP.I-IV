@@ -19,9 +19,10 @@ public class Helicopter : MonoBehaviour
 
     // Heli configs
     [SerializeField] float speed = 2f, rotationSpeed = 5f;
-    [SerializeField] Transform floor, bote;
+    [SerializeField] Transform floor, bote, _base;
     [SerializeField] Color ropeColor = Color.black;
-    [SerializeField] LayerMask groundMask, npcMask;
+    public LayerMask groundMask, npcMask;
+    public float npcDistanceToGround;
 
     Transform target;
 
@@ -100,20 +101,88 @@ public class Helicopter : MonoBehaviour
         target = bote;
         material.color = ropeColor;
 
-        float groundDistance = 0f,
+        float npcDistance = 0f,
               offset = bote.localScale.y/2;
 
         if (Physics.SphereCast(floor.position, raio, Vector3.down, out RaycastHit hit, Mathf.Infinity, npcMask))
-            groundDistance = hit.distance - offset;
+        {
+            npcDistance = hit.distance + (offset * 2);
+            if (Physics.Raycast(hit.transform.position, Vector3.down, out RaycastHit hit2, Mathf.Infinity, groundMask))
+            {
+                npcDistanceToGround = hit2.distance;
+                npcDistance += hit2.distance * 2;
+            }
+        }
 
-        while (currentLength < groundDistance)
+        while (currentLength < npcDistance)
         {
             currentLength += deploySpeed * Time.deltaTime;
-            currentLength = Mathf.Min(currentLength, groundDistance);
+            currentLength = Mathf.Min(currentLength, npcDistance);
             bote.position = floor.position + Vector3.down * currentLength;
             UpdateRope();
             yield return null;
         }
+
+        yield return new WaitForSeconds(1.5f);
+
+        while (currentLength > 0)
+        {
+            currentLength -= deploySpeed * Time.deltaTime;
+            currentLength = Mathf.Min(currentLength, npcDistance);
+            bote.position = floor.position - Vector3.up * currentLength;
+            UpdateRope();
+            yield return null;
+        }
+
+        // Rotaciona o heli para a posição
+        direction = (_base.position - transform.position);
+        normalDirection = new Vector3(direction.x, direction.y / 3, direction.z).normalized;
+
+        if (DistanceWithoutHeight(_base.position, transform.position) <= 15f)
+            normalDirection = new Vector3(direction.x, 0f, direction.z).normalized;
+
+        targetRotation = Quaternion.LookRotation(normalDirection, Vector3.up);
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.5f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Move o heli até a posição
+        while (DistanceWithoutHeight(transform.position, _base.position) > 1f)
+        {
+            transform.position = LerpWithoutHeight(transform.position, _base.position, speed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Corrige a rotação do heli e deixa ele paralelo ao chao
+        euler = transform.rotation.eulerAngles;
+        flatRotation = Quaternion.Euler(0f, euler.y, 0f);
+        while (Quaternion.Angle(transform.rotation, flatRotation) > 0.5f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, flatRotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        float groundDistance = 0f;
+        offset = transform.localScale.y / 2;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit _hit, Mathf.Infinity, groundMask))
+        {
+            groundDistance = _hit.distance;// + (offset * 2);
+        }
+
+        while (transform.position.y > _hit.transform.position.y + offset)
+        {
+            transform.Translate(speed * Time.deltaTime * Vector3.down);
+            yield return null;
+        }
+
+        foreach (var item in GetComponentsInChildren<HelicopterRotor>())
+            item.engineOn = false;
+
+        yield return new WaitForSeconds(15f);
 
         moving = false;
         switchCamera = false;

@@ -14,17 +14,11 @@ public class HelicopterRotor : MonoBehaviour
 
     void Update()
     {
-        // Alternar motor com a tecla E (ou troque por seu sistema de input)
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            engineOn = !engineOn;
-        }
-
         // Acelera ou desacelera suavemente
         float targetSpeed = engineOn ? maxRotationSpeed : 0f;
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.deltaTime / accelerationTime);
 
         // Rotaciona a hélice
-        transform.Rotate(rotationAxis * currentSpeed * Time.deltaTime);
+        transform.Rotate(currentSpeed * Time.deltaTime * rotationAxis);
     }
 }
