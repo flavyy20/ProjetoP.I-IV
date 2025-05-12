@@ -2016,7 +2016,7 @@ MonoBehaviour:
   floor: {fileID: 142580006}
   bote: {fileID: 2052748420}
   _base: {fileID: 1428950789}
-  ropeColor: {r: 0.034243584, g: 0, b: 1, a: 1}
+  ropeColor: {r: 0, g: 0, b: 0, a: 1}
   groundMask:
     serializedVersion: 2
     m_Bits: 8
@@ -2135,7 +2135,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

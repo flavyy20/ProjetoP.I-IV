@@ -99,7 +99,7 @@ public class Helicopter : MonoBehaviour
 
         cam3.fieldOfView /= 2;
         target = bote;
-        material.color = ropeColor;
+        SetNewColor(ropeColor);
 
         float npcDistance = 0f,
               offset = bote.localScale.y/2;
@@ -112,6 +112,19 @@ public class Helicopter : MonoBehaviour
                 npcDistanceToGround = hit2.distance;
                 npcDistance += hit2.distance * 2;
             }
+        }
+        else
+        {
+            moving = false;
+            switchCamera = false;
+            yield return null;
+            cam1.enabled = false;
+            cam2.enabled = false;
+            cam3.enabled = false;
+            cam3.fieldOfView *= 2;
+            lineRenderer.enabled = false;
+            SetNewColor(circleColor);
+            yield break;
         }
 
         while (currentLength < npcDistance)
@@ -192,12 +205,11 @@ public class Helicopter : MonoBehaviour
         cam3.enabled = false;
         cam3.fieldOfView *= 2;
         lineRenderer.enabled = false;
+        SetNewColor(circleColor);
     }
 
     void Raycast()
     {
-        if (moving) material.color = circleColor;
-
         if (toggle && switchCamera)
         {
             Ray ray = cam2.ScreenPointToRay(Input.mousePosition);
@@ -211,8 +223,8 @@ public class Helicopter : MonoBehaviour
                 Collider[] hits = Physics.OverlapSphere(worldPos, raio, npcMask);
                 if (hits.Length > 0)
                 {
-                    foreach (var item in hits)
-                        print(item.name);
+                    //foreach (var item in hits)
+                    //    print(item.name);
                 }
                 if (Input.GetMouseButtonDown(0))
                     SetDestination(worldPos);
@@ -265,6 +277,12 @@ public class Helicopter : MonoBehaviour
     {
         cam1.enabled = !switchCamera;
         cam2.enabled = switchCamera;
+    }
+
+    void SetNewColor(Color newColor)
+    {
+        lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
+        lineRenderer.material.color = newColor;
     }
 
     float DistanceWithoutHeight(Vector3 a, Vector3 b)
