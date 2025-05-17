@@ -6,6 +6,10 @@ TagManager:
   tags:
   - npc
   - WanderArea
+  - UnsafeGround
+  - NPC
+  - Unsafe
+  - Ground
   layers:
   - Default
   - TransparentFX
