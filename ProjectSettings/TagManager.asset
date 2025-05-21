@@ -10,11 +10,12 @@ TagManager:
   - NPC
   - Unsafe
   - Ground
+  - Floor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - Walkable
   - Water
   - UI
   - Npc
