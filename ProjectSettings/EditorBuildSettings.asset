@@ -23,5 +23,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Flavia/Scenes/teste.unity
     guid: ec4b6133035ce4b46a72c05edc4920fe
+  - enabled: 1
+    path: Assets/Thasso/Scenes/Fase_Marko.unity
+    guid: f97da183075e1a44fa8586229827f5a5
+  - enabled: 1
+    path: Assets/Thasso/TelaMonitoramento/TelaMonitoramento.unity
+    guid: d49dbb601fc907c4fb65698a00957ec8
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

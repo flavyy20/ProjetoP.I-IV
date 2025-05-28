@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class NPCRandomWalk : MonoBehaviour
 {
+    public Transform player;
+    public float followDistance = 50f;
     public float moveInterval = 3f;
+    public float randomWalkRadius = 30f;
+
     private NavMeshAgent agent;
+    private float timer;
+    private bool isCaught = false;
+
     private Renderer rend;
     private Color originalColor;
-
-    private bool isCaught = false;
 
     void Start()
     {
@@ -17,22 +23,42 @@ public class NPCRandomWalk : MonoBehaviour
         if (rend != null)
             originalColor = rend.material.color;
 
-        InvokeRepeating(nameof(MoveRandomly), 0f, moveInterval);
+        timer = moveInterval;
     }
 
     void Update()
     {
-        if (isCaught)
+        if (isCaught || !agent.isOnNavMesh)
             return;
 
-        // Verifica se o NPC est� sobre um ch�o que virou "lava"
+        // 🔥 PRIORIDADE: verificar se está sobre solo de lava
         Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 1f))
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 CaughtByLava();
+                return; // importante: parar aqui se caiu
             }
+        }
+
+        // Se o player estiver perto, segue
+        if (player != null)
+        {
+            float distance = Vector3.Distance(transform.position, player.position);
+            if (distance < followDistance)
+            {
+                agent.SetDestination(player.position);
+                return;
+            }
+        }
+
+        // Caso contrário, anda aleatoriamente
+        timer += Time.deltaTime;
+        if (timer >= moveInterval)
+        {
+            timer = 0f;
+            MoveRandomly();
         }
     }
 
@@ -41,10 +67,10 @@ public class NPCRandomWalk : MonoBehaviour
         if (isCaught)
             return;
 
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * 10f;
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * randomWalkRadius;
         randomDirection += transform.position;
 
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 30f, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
         }
@@ -69,14 +95,21 @@ public class NPCRandomWalk : MonoBehaviour
             rend.material.color = Color.red;
         }
 
-        // Ativa gravidade real para cair com o ch�o
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = false; // Ativa a f�sica
+            rb.isKinematic = false;
             rb.useGravity = true;
         }
+    }
+    public void StopMovement()
+    {
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
 
-        CancelInvoke(nameof(MoveRandomly));
+        isCaught = true; // Garante que ele pare de tentar andar
     }
 }

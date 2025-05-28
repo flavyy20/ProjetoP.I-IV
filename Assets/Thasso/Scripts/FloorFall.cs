@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
-//using Unity.AI.Navigation;
 
 public class FloorFall : MonoBehaviour
 {
-    public float fallDelay = 5f;
+    [Header("Tempo de queda personalizado")]
+    public float fallTime = 5f; // Agora você define o tempo direto no Inspector
+
+    [Header("Parâmetros da queda")]
     public int blinkCount = 5;
     public float blinkInterval = 0.3f;
-    public float fallDistance = 0.6f;  // Distância total que o piso desce durante o blink
+    public float fallDistance = 0.6f;
 
-    private NavMeshSurface navMeshSurface;
     private Renderer rend;
     private Color originalColor;
     private Vector3 initialPosition;
@@ -20,11 +21,10 @@ public class FloorFall : MonoBehaviour
         if (rend != null)
             originalColor = rend.material.color;
 
-        navMeshSurface = UnityEngine.Object.FindAnyObjectByType<NavMeshSurface>();
-
         initialPosition = transform.position;
 
-        //Invoke(nameof(StartBlink), fallDelay - (blinkCount * blinkInterval * 2f));
+        // Agende a queda automática com base no tempo definido no Inspector
+        Invoke(nameof(StartBlink), fallTime);
     }
 
     public void StartBlink()
@@ -32,7 +32,7 @@ public class FloorFall : MonoBehaviour
         StartCoroutine(BlinkThenFall());
     }
 
-    System.Collections.IEnumerator BlinkThenFall()
+    private System.Collections.IEnumerator BlinkThenFall()
     {
         float step = fallDistance / blinkCount;
 
@@ -48,14 +48,13 @@ public class FloorFall : MonoBehaviour
 
             yield return new WaitForSeconds(blinkInterval);
 
-            // Faz o chão afundar um pouco a cada ciclo
             transform.position -= new Vector3(0f, step, 0f);
         }
 
         Fall();
     }
 
-    void Fall()
+    private void Fall()
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
 
@@ -63,12 +62,9 @@ public class FloorFall : MonoBehaviour
             rend.material.color = Color.red;
 
         StopNPCsOnTop();
-
-        /*if (navMeshSurface != null)
-            navMeshSurface.BuildNavMesh();*/
     }
 
-    void StopNPCsOnTop()
+    private void StopNPCsOnTop()
     {
         Collider floorCollider = GetComponent<Collider>();
         if (floorCollider == null)

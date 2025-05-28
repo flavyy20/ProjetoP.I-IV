@@ -11,6 +11,7 @@ TagManager:
   - Unsafe
   - Ground
   - Floor
+  - SafeZone
   layers:
   - Default
   - TransparentFX
