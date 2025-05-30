@@ -12,6 +12,8 @@ TagManager:
   - Ground
   - Floor
   - SafeZone
+  - Barragem
+  - DrenoFinal
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Water
   - UI
   - Npc
-  - 
+  - Barragem
   - 
   - 
   - 
