@@ -1,42 +1,131 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class FloorFallManager : MonoBehaviour
 {
-    public float fallDelay = 5f;  // intervalo entre quedas
+    public Transform player;
+    public float followDistance = 50f;
+    public float moveInterval = 3f;
+    public float randomWalkRadius = 30f;
 
-    private List<FloorFall> floors = new List<FloorFall>();
+    private bool wasOnWalkable = false;
+    private NavMeshAgent agent;
+    private float timer;
+    private bool isCaught = false;
 
-    private void Start()
+    private Renderer rend;
+    private Color originalColor;
+
+    private Rigidbody rb;
+
+    void Start()
     {
-        // Busca todos os pisos com o script FloorFall na cena
-        FloorFall[] foundFloors = FindObjectsOfType<FloorFall>();
-        floors.AddRange(foundFloors);
+        agent = GetComponent<NavMeshAgent>();
+        rend = GetComponent<Renderer>();
 
-        // Inicia a repetição do método que escolhe pisos para cair
-        InvokeRepeating(nameof(TriggerRandomFloor), fallDelay, fallDelay);
+        if (rend != null)
+            originalColor = rend.material.color;
+
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = gameObject.AddComponent<Rigidbody>();
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
+
+        timer = moveInterval;
     }
 
-    private void TriggerRandomFloor()
+    void Update()
     {
-        // Remove os pisos que já estão caindo ou que já caíram
-        floors.RemoveAll(f => f == null);  // limpa pisos destruídos
+        if (isCaught || !agent.isOnNavMesh)
+            return;
 
-        if (floors.Count == 0)
+        bool standingNow = IsStandingOnWalkable();
+
+        if (!wasOnWalkable && standingNow)
         {
-            // Para a repetição se não tiver mais pisos
-            CancelInvoke(nameof(TriggerRandomFloor));
+            wasOnWalkable = true;
+        }
+        else if (wasOnWalkable && !standingNow)
+        {
+            CaughtByLava();
             return;
         }
 
-        // Escolhe um piso aleatório da lista
-        int index = Random.Range(0, floors.Count);
-        FloorFall chosenFloor = floors[index];
+        if (player != null && Vector3.Distance(transform.position, player.position) < followDistance)
+        {
+            agent.SetDestination(player.position);
+            return;
+        }
 
-        // Inicia o blink e queda
-        chosenFloor.StartBlink();
+        timer += Time.deltaTime;
+        if (timer >= moveInterval)
+        {
+            timer = 0f;
+            MoveRandomly();
+        }
+    }
 
-        // Remove o piso escolhido da lista para não cair de novo
-        floors.RemoveAt(index);
+    bool IsStandingOnWalkable()
+    {
+        Vector3 checkPos = transform.position + Vector3.down * 0.1f;
+        float checkRadius = 50f;
+
+        Collider[] hits = Physics.OverlapSphere(checkPos, checkRadius);
+        foreach (var col in hits)
+        {
+            if (LayerMask.LayerToName(col.gameObject.layer) == "Walkable")
+                return true;
+        }
+        return false;
+    }
+
+    void MoveRandomly()
+    {
+        if (isCaught)
+            return;
+
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * randomWalkRadius;
+        randomDirection += transform.position;
+
+        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 30f, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+        }
+    }
+
+    public void CaughtByLava()
+    {
+        if (isCaught)
+            return;
+
+        isCaught = true;
+
+        if (agent != null)
+        {
+            agent.ResetPath();
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
+
+        if (rend != null)
+            rend.material.color = Color.red;
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
+        rb.AddForce(Vector3.down * 100f, ForceMode.Impulse);
+
+        StartCoroutine(FreezeAfterDelay(rb, 1.5f));
+    }
+
+    private System.Collections.IEnumerator FreezeAfterDelay(Rigidbody rb, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 }
