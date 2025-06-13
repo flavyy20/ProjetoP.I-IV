@@ -642,7 +642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1402406893, guid: 2c3061c65a44ab94c936e91cb38c97a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 65886b0af5fdad54eaf5d5c72ac247a6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1329,7 +1329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1402406893, guid: 2c3061c65a44ab94c936e91cb38c97a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 65886b0af5fdad54eaf5d5c72ac247a6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1452,7 +1452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cityName: Marko
-  sceneToLoad: testesThasso
+  sceneToLoad: fase_Marko
   progressBar: {fileID: 1484594471}
 --- !u!114 &986460954
 MonoBehaviour:
@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1402406893, guid: 2c3061c65a44ab94c936e91cb38c97a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 65886b0af5fdad54eaf5d5c72ac247a6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2741,7 +2741,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1402406893, guid: 2c3061c65a44ab94c936e91cb38c97a5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 65886b0af5fdad54eaf5d5c72ac247a6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
