@@ -107,8 +107,8 @@ public class FloorFall : MonoBehaviour
     private IEnumerator MoveDownRoutine()
     {
         float elapsed = 0f;
-        float duration = 3f; // tempo que vai demorar para o chão descer
-        float distance = 120f; // quanto vai descer no total
+        float duration = 3f;
+        float distance = 200f; // Aprofunde como quiser, ex: 200f
 
         Vector3 startPos = transform.position;
         Vector3 endPos = startPos - new Vector3(0f, distance, 0f);
@@ -119,6 +119,11 @@ public class FloorFall : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+
         transform.position = endPos;
+
+        yield return new WaitForSeconds(0.5f); // Espera para garantir a queda completa
+
+        Destroy(gameObject); // Remove o chão
     }
 }

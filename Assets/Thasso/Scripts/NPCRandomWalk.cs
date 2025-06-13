@@ -12,6 +12,8 @@ public class NPCRandomWalk : MonoBehaviour
     public LayerMask groundLayer;
     public float groundCheckRadius = 0.5f;
 
+    private bool alreadyCounted = false;
+
     private bool wasOnWalkable = false;
     private NavMeshAgent agent;
     private float timer;
@@ -111,6 +113,12 @@ public class NPCRandomWalk : MonoBehaviour
         {
             isInSafeZone = true;
             Debug.Log($"{gameObject.name} entrou na Zona Segura (2D XZ).");
+
+            if (!alreadyCounted)
+            {
+                alreadyCounted = true;
+                GameManagerM.Instance.RegistrarResgate(); // atualiza contador no GameManager
+            }
         }
         else if (!insideXZ && isInSafeZone)
         {
@@ -226,6 +234,10 @@ public class NPCRandomWalk : MonoBehaviour
         }
 
         transform.position = endPos;
+
+        yield return new WaitForSeconds(0.5f); // Pequena pausa antes de remover
+
+        Destroy(gameObject); // Destrói o NPC
     }
 
     private void OnDrawGizmosSelected()
