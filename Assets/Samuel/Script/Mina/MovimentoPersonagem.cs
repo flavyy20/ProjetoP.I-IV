@@ -12,7 +12,7 @@ public class MovimentoPersonagem : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked; // Esconde e trava o cursor
+        // Cursor.lockState = CursorLockMode.Locked; // Esconde e trava o cursor
     }
 
     void Update()
