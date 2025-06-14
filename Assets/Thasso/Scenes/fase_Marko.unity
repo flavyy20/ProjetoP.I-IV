@@ -5377,20 +5377,12 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 162235451371715154, guid: 597b28dad7ff95b4d94247701fdc5cd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 162235451371715154, guid: 597b28dad7ff95b4d94247701fdc5cd6, type: 3}
       propertyPath: m_TagString
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 651809064556962024, guid: 597b28dad7ff95b4d94247701fdc5cd6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 651809064556962024, guid: 597b28dad7ff95b4d94247701fdc5cd6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 651809064556962024, guid: 597b28dad7ff95b4d94247701fdc5cd6, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 651809064556962024, guid: 597b28dad7ff95b4d94247701fdc5cd6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15234,7 +15226,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10000
-  m_FocalLength: 65.032036
+  m_FocalLength: 66.562996
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -15249,7 +15241,7 @@ Camera:
     height: 1
   near clip plane: 100
   far clip plane: 100000
-  field of view: 20.90974
+  field of view: 20.439062
   orthographic: 0
   orthographic size: 2.399961
   m_Depth: 0
