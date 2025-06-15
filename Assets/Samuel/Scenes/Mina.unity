@@ -373,7 +373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &182091194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3218,7 +3218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1381343276
 Transform:
   m_ObjectHideFlags: 0
@@ -3688,11 +3688,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -60
+  near clip plane: -175.7
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 35
+  orthographic size: 93.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4931,15 +4931,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -215.67735
+      value: -170.7
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -76.100006
+      value: -76.3
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 288.1381
+      value: -235.1
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5212,8 +5212,8 @@ MonoBehaviour:
   m_Follow: {fileID: 2042447928}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 35
-    NearClipPlane: -60
+    OrthographicSize: 93.7
+    NearClipPlane: -175.7
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
