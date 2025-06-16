@@ -3398,7 +3398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -3418,7 +3418,7 @@ Canvas:
   m_GameObject: {fileID: 1096609046}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 7370277067754566428}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -4282,7 +4282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -14.999957, y: -150.00629}
+  m_AnchoredPosition: {x: -14.999957, y: -137}
   m_SizeDelta: {x: 120, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1484551976
@@ -5802,7 +5802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e96d72707d088cf418e8ac464b4cc108, type: 3}
       propertyPath: m_Name
-      value: ImageToStl.com_portoCasas
+      value: Predios
       objectReference: {fileID: 0}
     - target: {fileID: 4865064391339405807, guid: e96d72707d088cf418e8ac464b4cc108, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6808,7 +6808,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 451, y: 207}
+  m_AnchoredPosition: {x: 379, y: 155}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2067118158
@@ -16376,7 +16376,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10000
-  m_FocalLength: 62.56922
+  m_FocalLength: 68.32189
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -16391,7 +16391,7 @@ Camera:
     height: 1
   near clip plane: 100
   far clip plane: 100000
-  field of view: 21.713575
+  field of view: 19.923552
   orthographic: 0
   orthographic size: 2.399961
   m_Depth: 0
