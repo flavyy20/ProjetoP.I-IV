@@ -12,8 +12,6 @@ TagManager:
   - Ground
   - Floor
   - SafeZone
-  - CinemachineTarget
-  - Parede
   layers:
   - Default
   - TransparentFX
