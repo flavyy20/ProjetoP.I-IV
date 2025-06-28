@@ -7,6 +7,7 @@ public class interacaoLaser : MonoBehaviour
     public KeyCode teclaAtivacao = KeyCode.L;
     public ControladorDelaser laser;
     public float distanciaAtivacao = 15f;
+    public Animator animator; // Referência para o Animator
 
     void Update()
     {
@@ -17,6 +18,10 @@ public class interacaoLaser : MonoBehaviour
             if (distancia <= distanciaAtivacao)
             {
                 laser.AlternarLaser();
+                if (animator != null)
+                {
+                    animator.SetTrigger("Interagir");
+                }
             }
             else
             {

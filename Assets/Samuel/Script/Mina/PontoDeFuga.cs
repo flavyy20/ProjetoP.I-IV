@@ -27,16 +27,7 @@ public class PontoDeFuga : MonoBehaviour
 
     void Start()
     {
-        //materialOriginal = GetComponent<Renderer>().material;
-
-        //// SPAWN DE NPCS (apenas pós-desastre e se foi selecionado antes)
-        //if (GameM.instance != null &&
-        //    GameM.instance.faseAtual == Fase.PosDesastre &&
-        //    selecionado)
-        //{
-        //    //SpawnarNPCs();
-        //    //SpawnarNPCsPosDesastre();
-        //}
+        
 
         if (GameM.instance.faseAtual == Fase.PosDesastre && selecionado)
         {
@@ -143,29 +134,6 @@ public class PontoDeFuga : MonoBehaviour
         Debug.Log("Ponto " + (selecionado ? "selecionado" : "desselecionado"));
     }
 
-    // PÓS-DESASTRE: Spawna NPCs no ponto
-    //public void SpawnarNPCs()
-    //{
-    //    if (npcsNoPonto.Count == 0) // Só spawna se não tiver NPCs
-    //    {
-    //        for (int i = 0; i < npcsPresentes; i++)
-    //        {
-    //            Vector3 pos = transform.position + new Vector3(
-    //                Random.Range(-3f, 3f),
-    //                0,
-    //                Random.Range(-3f, 3f));
-
-    //                GameObject npc = Instantiate(
-    //                prefabNPC,
-    //                pos,
-    //                Quaternion.identity,
-    //                transform); // Parenteia ao ponto
-    //            npc.transform.localScale = prefabNPC.transform.localScale;
-    //            npc.name = $"NPC_{name}_{i}"; // Nome único
-    //            npcsNoPonto.Add(npc.GetComponent<NPC>());
-    //        }
-    //    }
-    //}
 
     public void SpawnarNPCsPosDesastre(List<GameM.DadosNPC> npcsDados)
     {

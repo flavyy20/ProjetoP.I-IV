@@ -5,36 +5,48 @@ using UnityEngine;
 public class MovimentoPersonagem : MonoBehaviour
 {
     public float velocidadeMovimento = 5f;
-    public float sensibilidadeMouse = 100f;
     public Transform cameraPrincipal;
+    public Animator animator; 
+    public float velocidadeRotacao= 8f;
 
     private float rotacaoX = 0f;
+    private bool estaCorrendo = false;
+    private Vector3 direcaoMovimento;
 
     void Start()
     {
-        // Cursor.lockState = CursorLockMode.Locked; // Esconde e trava o cursor
+       
     }
 
     void Update()
     {
-        // Movimento WASD
+        
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 movimento = transform.right * horizontal + transform.forward * vertical;
-        transform.Translate(movimento * velocidadeMovimento * Time.deltaTime, Space.World);
+        estaCorrendo = (horizontal != 0f || vertical != 0f);
 
-        // Rotação com botão direito do mouse
-        if (Input.GetMouseButton(1)) // Botão direito pressionado
+        direcaoMovimento = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direcaoMovimento.magnitude >= 0.1f)
         {
-            float mouseX = Input.GetAxis("Mouse X") * sensibilidadeMouse * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * sensibilidadeMouse * Time.deltaTime;
+            
+            float anguloAlvo = Mathf.Atan2(direcaoMovimento.x, direcaoMovimento.z) * Mathf.Rad2Deg;
 
-            rotacaoX -= mouseY;
-            rotacaoX = Mathf.Clamp(rotacaoX, -90f, 90f); // Limita a rotação vertical
+            
+            Quaternion rotacaoAlvo = Quaternion.Euler(0f, anguloAlvo, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotacaoAlvo, velocidadeRotacao * Time.deltaTime);
 
-            cameraPrincipal.localRotation = Quaternion.Euler(rotacaoX, 0f, 0f);
-            transform.Rotate(Vector3.up * mouseX);
+            
+            transform.Translate(Vector3.forward * velocidadeMovimento * Time.deltaTime);
         }
+
+
+
+        if (animator != null)
+        {
+            animator.SetBool("Correndo", estaCorrendo);
+        }
+
     }
 }

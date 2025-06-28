@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Samuel/Scenes/Mina.unity
     guid: 1a38cb39c402c174fa7726501b6e2d83
   - enabled: 1
+    path: Assets/Samuel/Scenes/MinaPosDesastre.unity
+    guid: 6e8163f47ec7f294996312ef1423ab34
+  - enabled: 1
     path: Assets/Thasso/Scenes/fase_Marko.unity
     guid: fe71320c5bc14b2419313c835c3516b0
   m_configObjects: {}
