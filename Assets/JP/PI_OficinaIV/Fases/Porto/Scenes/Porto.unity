@@ -183,6 +183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle_Container (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4919397185937707043, guid: 0e464fba3665dc84590c562005980c40, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -199,6 +203,10 @@ PrefabInstance:
     - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_Name
       value: Carro_Porto (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -297,6 +305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle_Ambulance
       objectReference: {fileID: 0}
+    - target: {fileID: 366205771733937895, guid: c2d86c6be92b94746bda0aa4e2ada96b, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -313,6 +325,10 @@ PrefabInstance:
     - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_Name
       value: Carro_Porto
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -459,6 +475,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carro_Porto (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 431
@@ -515,6 +535,10 @@ PrefabInstance:
     - target: {fileID: 3229995849890860140, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
       propertyPath: m_Name
       value: Vehicle_Bus (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229995849890860140, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 3229995849890959436, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -836,6 +860,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 65702495048144492, guid: c3c3ae21497520647a6677beaeb91821, type: 3}
+    - {fileID: -8700617353114198275, guid: c3c3ae21497520647a6677beaeb91821, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3c3ae21497520647a6677beaeb91821, type: 3}
@@ -850,6 +875,10 @@ PrefabInstance:
     - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_Name
       value: Carro_Porto (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -908,6 +937,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carro_Porto (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1250
@@ -965,6 +998,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carro_Porto (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1942
@@ -1021,6 +1058,10 @@ PrefabInstance:
     - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_Name
       value: Carro_Porto (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1081,7 +1122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 127169379748499382, guid: 65d3edf482361604eba2723c3a48de1c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 230
+      value: 247
       objectReference: {fileID: 0}
     - target: {fileID: 127169379748499382, guid: 65d3edf482361604eba2723c3a48de1c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1201,11 +1242,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -340.8
+  near clip plane: -383.1
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 553.9
+  orthographic size: 350.44
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1325,6 +1366,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle_Bus (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3229995849890860140, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 3229995849890959436, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -828
@@ -1421,6 +1466,10 @@ PrefabInstance:
     - target: {fileID: 366205771733937895, guid: c2d86c6be92b94746bda0aa4e2ada96b, type: 3}
       propertyPath: m_Name
       value: Vehicle_Ambulance (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 366205771733937895, guid: c2d86c6be92b94746bda0aa4e2ada96b, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1597,6 +1646,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle_Container
       objectReference: {fileID: 0}
+    - target: {fileID: 4919397185937707043, guid: 0e464fba3665dc84590c562005980c40, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1740,6 +1793,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle_Container (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4919397185937707043, guid: 0e464fba3665dc84590c562005980c40, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1800,8 +1857,8 @@ MonoBehaviour:
   m_Follow: {fileID: 915782889}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 553.9
-    NearClipPlane: -340.8
+    OrthographicSize: 350.44
+    NearClipPlane: -383.1
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -1828,6 +1885,10 @@ PrefabInstance:
     - target: {fileID: 3229995849890860140, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
       propertyPath: m_Name
       value: Vehicle_Bus
+      objectReference: {fileID: 0}
+    - target: {fileID: 3229995849890860140, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 3229995849890959436, guid: 16b1120364523d14fb3ce989e9cf1ea5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1919,6 +1980,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carro_Porto (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1731
@@ -1976,6 +2041,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carro_Porto (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2212
@@ -2032,6 +2101,10 @@ PrefabInstance:
     - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_Name
       value: Carro_Porto (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2198,6 +2271,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carro_Porto (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
+      objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1580
@@ -2262,7 +2339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paredeLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 129
 --- !u!114 &1915480368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2275,16 +2352,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581843500e52ee746b6f8b0b539cafbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidade: 300
-  velocidadeRotacao: 10
-  alturaPulo: 30
-  gravidade: -200
-  tempoPulo: 0.5
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
+  velMax: 300
+  valorAcel: 200
+  velRotacao: 300
+  estadoRotacao: 0
+  alturaPulo: 50
+  gravidade: -300
+  tempoPulo: 0.2
+  GroundedOffset: -3.5
+  GroundedRadius: 6.6
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 129
 --- !u!143 &1915480369
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2304,7 +2383,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 138.8
+  m_Height: 133.6
   m_Radius: 20
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -2322,6 +2401,10 @@ PrefabInstance:
     - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_Name
       value: Carro_Porto (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820811460139464071, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
+      propertyPath: m_TagString
+      value: Parede
       objectReference: {fileID: 0}
     - target: {fileID: 5308942243419057981, guid: a407b3a925f13e642bf517b6b07eda08, type: 3}
       propertyPath: m_LocalPosition.x
