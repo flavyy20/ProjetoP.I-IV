@@ -10,19 +10,18 @@ public class PuzzlePiezometro : MonoBehaviour
     public Text textoValorAtual;
     public Text textoValorAlvo;
     public RectTransform dial;
-    public Transform pontoFocoCamera; // Novo: Posição para a câmera focar
     public float valorMin = 0f;
     public float valorMax = 5f;
-    private bool puzzleCompleto = false;
+    public static bool puzzleCompleto = false;
     public Action onPuzzleComplete;
-    public Action<Transform> onPuzzleStart; // Novo: Evento de início (com ponto de foco)
+    public Action<Transform> onPuzzleStart; 
     private float valorAtual;
     private float valorAlvo;
 
     void Start()
     {
         GerarNovoAlvo();
-        onPuzzleStart?.Invoke(pontoFocoCamera); // Notifica o início do puzzle
+        
     }
 
     void Update()
@@ -38,6 +37,7 @@ public class PuzzlePiezometro : MonoBehaviour
             textoValorAtual.color = Color.green;
             onPuzzleComplete?.Invoke(); // Chama o evento UMA vez
             Debug.Log("Evento onPuzzleComplete disparado!");
+            Debug.Log("completo?:"+puzzleCompleto);
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PainelDiagnostico : MonoBehaviour
@@ -14,6 +15,7 @@ public class PainelDiagnostico : MonoBehaviour
 
     [Header("Config")]
     public KeyCode teclaFechar = KeyCode.Q;
+    public string cenaInicial = "TelaMonitoramento";
 
     [Header("Puzzles")]
     public List<GameObject> puzzlesPrefabs;
@@ -43,6 +45,7 @@ public class PainelDiagnostico : MonoBehaviour
         {
             FecharPainel();
         }
+        VerificarSolucao();
     }
 
     public void AbrirPainel(Barragem barragem)
@@ -155,10 +158,25 @@ public class PainelDiagnostico : MonoBehaviour
 
     void VerificarSolucao()
     {
-        if (barragemAtual.problemas.All(p => p.resolvido))
+        //if (barragemAtual.problemas.All(p => p.resolvido))
+        //{
+        //    textoProblemas.text += "\nTODOS OS PROBLEMAS RESOLVIDOS!";
+        //    StartCoroutine(CarregarCenaInicial());
+        //}
+
+        if(PuzzleManager.puzzleDrenagemCompleto==true && PuzzlePiezometro.puzzleCompleto == true)
         {
+            Debug.Log("entrou no verificar");
             textoProblemas.text += "\nTODOS OS PROBLEMAS RESOLVIDOS!";
+            StartCoroutine(CarregarCenaInicial());
         }
+    }
+
+    IEnumerator CarregarCenaInicial()
+    {
+        
+        yield return new WaitForSecondsRealtime(1f);
+        SceneManager.LoadScene(cenaInicial);
     }
 
     public void FecharPainel()

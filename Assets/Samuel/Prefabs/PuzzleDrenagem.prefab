@@ -1079,7 +1079,7 @@ Transform:
   m_GameObject: {fileID: 5179325555435459626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 132.3, y: 39.1, z: 351.4}
+  m_LocalPosition: {x: 37.2, y: 39.1, z: 326.2}
   m_LocalScale: {x: 1.24, y: 1.24, z: 1.24}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   conectores:
   - {fileID: 60270173420669900}
   - {fileID: 2533729170038094321}
-  distanciaEncaixe: 1
+  distanciaEncaixe: 2
 --- !u!1 &5814383382626402859
 GameObject:
   m_ObjectHideFlags: 0

@@ -589,7 +589,7 @@ PrefabInstance:
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: prefabNPC
       value: 
-      objectReference: {fileID: 4436941237956651021, guid: ab9a786631d5f7142891c1a39081dc91, type: 3}
+      objectReference: {fileID: 919132149155446097, guid: 3e00dfdb04ec42d4cb67dfa5a59369b4, type: 3}
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: selecionado
       value: 0
@@ -620,7 +620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.7122574
+      value: -29.7
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1000,7 +1000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5811517544658636179, guid: a42c62d3abc2631429f695c10e86845f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.016
+      value: -1.13
       objectReference: {fileID: 0}
     - target: {fileID: 5811517544658636179, guid: a42c62d3abc2631429f695c10e86845f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2187,7 +2187,7 @@ PrefabInstance:
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: prefabNPC
       value: 
-      objectReference: {fileID: 4436941237956651021, guid: ab9a786631d5f7142891c1a39081dc91, type: 3}
+      objectReference: {fileID: 919132149155446097, guid: 3e00dfdb04ec42d4cb67dfa5a59369b4, type: 3}
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: npcsPresentes
       value: 1
@@ -2557,8 +2557,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadeMovimento: 5
-  sensibilidadeMouse: 100
   cameraPrincipal: {fileID: 1458321191}
+  animator: {fileID: 0}
+  velocidadeRotacao: 8
 --- !u!136 &1430705650
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2692,6 +2693,7 @@ MonoBehaviour:
   teclaAtivacao: 108
   laser: {fileID: 0}
   distanciaAtivacao: 9
+  animator: {fileID: 0}
 --- !u!1 &1458321188
 GameObject:
   m_ObjectHideFlags: 0
