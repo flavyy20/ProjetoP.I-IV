@@ -340,6 +340,7 @@ namespace StarterAssets
                 {
                     _fallTimeoutDelta -= Time.deltaTime;
                 }
+
                 else
                 {
                     // update animator if using character

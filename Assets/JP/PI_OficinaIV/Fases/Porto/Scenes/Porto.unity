@@ -1054,7 +1054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 127169379748499382, guid: 65d3edf482361604eba2723c3a48de1c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 247
+      value: 17.2
       objectReference: {fileID: 0}
     - target: {fileID: 127169379748499382, guid: 65d3edf482361604eba2723c3a48de1c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1126,7 +1126,6 @@ GameObject:
   - component: {fileID: 912597777}
   - component: {fileID: 912597776}
   - component: {fileID: 912597775}
-  - component: {fileID: 912597778}
   - component: {fileID: 912597779}
   m_Layer: 0
   m_Name: Main Camera
@@ -1174,11 +1173,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -383.1
+  near clip plane: -17.7
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 350.44
+  orthographic size: 40.32
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1202,25 +1201,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912597774}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27781588, y: -0.36497167, z: 0.1150751, w: 0.8811196}
-  m_LocalPosition: {x: 23.792223, y: 590.9306, z: -1498.5476}
+  m_LocalRotation: {x: 0.23911765, y: -0.3696438, z: 0.09904577, w: 0.89239913}
+  m_LocalPosition: {x: 7.623725, y: 68.6, z: -141.92374}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &912597778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912597774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &912597779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,7 +1267,7 @@ Transform:
   m_GameObject: {fileID: 915782888}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 14.28, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1750,14 +1737,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1296702926}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27781588, y: -0.36497167, z: 0.1150751, w: 0.8811196}
-  m_LocalPosition: {x: 23.792223, y: 590.9306, z: -1498.5476}
+  m_LocalRotation: {x: 0.23911765, y: -0.3696438, z: 0.09904577, w: 0.89239913}
+  m_LocalPosition: {x: 7.623725, y: 68.6, z: -141.92374}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290770598}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 35, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: -45, z: 0}
 --- !u!114 &1296702928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1780,8 +1767,8 @@ MonoBehaviour:
   m_Follow: {fileID: 915782889}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 350.44
-    NearClipPlane: -383.1
+    OrthographicSize: 40.32
+    NearClipPlane: -17.7
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -1887,7 +1874,7 @@ Transform:
   m_GameObject: {fileID: 1415528489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18, y: 570.91486, z: -1492.7552}
+  m_LocalPosition: {x: 1.5, y: 63.6, z: -135.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2485,15 +2472,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581843500e52ee746b6f8b0b539cafbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velMax: 300
-  valorAcel: 200
-  velRotacao: 300
-  estadoRotacao: 0
-  alturaPulo: 50
-  gravidade: -300
+  velMax: 10
+  valorAcel: 10
+  velRotacao: 8
+  alturaPulo: 6
+  gravidade: -15
   tempoPulo: 0.2
-  GroundedOffset: -3.5
-  GroundedRadius: 6.6
+  GroundedOffset: -0.12
+  GroundedRadius: 0.68
   GroundLayers:
     serializedVersion: 2
     m_Bits: 129
@@ -2516,13 +2502,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 133.6
-  m_Radius: 20
+  m_Height: 14.46
+  m_Radius: 1.6
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 64.2, z: 0}
+  m_Center: {x: 0, y: 6.64, z: 0}
 --- !u!1001 &2121315520
 PrefabInstance:
   m_ObjectHideFlags: 0
