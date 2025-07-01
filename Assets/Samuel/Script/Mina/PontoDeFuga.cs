@@ -29,7 +29,7 @@ public class PontoDeFuga : MonoBehaviour
     {
         
 
-        if (GameM.instance.faseAtual == Fase.PosDesastre && selecionado)
+        if (GameM.instance.faseAtual == GameM.Fase.PosDesastre && selecionado)
         {
             CarregarNPCsPosDesastre();
         }
@@ -96,7 +96,7 @@ public class PontoDeFuga : MonoBehaviour
         if (GameM.instance == null) return;
 
         // COMPORTAMENTO PRÉ-DESASTRE (seleção de pontos)
-        if (GameM.instance.faseAtual == Fase.PreDesastre)
+        if (GameM.instance.faseAtual == GameM.Fase.PreDesastre)
         {
             float distancia = Vector3.Distance(transform.position,
                 GameObject.FindGameObjectWithTag("Player").transform.position);
@@ -108,7 +108,7 @@ public class PontoDeFuga : MonoBehaviour
             }
         }
         // COMPORTAMENTO PÓS-DESASTRE (resgate de NPCs)
-        else if (GameM.instance.faseAtual == Fase.PosDesastre &&
+        else if (GameM.instance.faseAtual == GameM.Fase.PosDesastre &&
                 selecionado &&
                 !todosResgatados &&
                 Input.GetKeyDown(KeyCode.T))
@@ -206,7 +206,7 @@ public class PontoDeFuga : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, distanciaInteracao);
 
         // Pós-desastre: raio de resgate (azul)
-        if (GameM.instance != null && GameM.instance.faseAtual == Fase.PosDesastre)
+        if (GameM.instance != null && GameM.instance.faseAtual == GameM.Fase.PosDesastre)
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(transform.position, raioResgate);
