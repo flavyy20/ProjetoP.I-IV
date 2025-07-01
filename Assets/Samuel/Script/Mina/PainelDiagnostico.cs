@@ -24,6 +24,9 @@ public class PainelDiagnostico : MonoBehaviour
     [HideInInspector] public bool painelAtivo = false;
     private Barragem barragemAtual;
 
+    [Header("Seta de Navegação")]
+    public List<SetaVoadora> setasFuga;  // Arraste as setas aqui no Inspector
+    public string descricaoAtivarSetas = "Zonas de Fuga Identificadas"; // Descrição que ativa as setas
 
 
     public static PainelDiagnostico instance;
@@ -55,6 +58,8 @@ public class PainelDiagnostico : MonoBehaviour
         painel.SetActive(true);
         Time.timeScale = 0;
 
+        AtivarSetasFuga(false);
+
         foreach (Transform child in listaChecklist)
         {
             Destroy(child.gameObject);
@@ -76,7 +81,15 @@ public class PainelDiagnostico : MonoBehaviour
 
             int index = i;
             toggle.onValueChanged.AddListener((valor) => {
-                if (valor && !problema.resolvido)
+
+                if (problema.descricao == descricaoAtivarSetas)
+                {
+                    // Caso especial para Zonas de Fuga - não inicia puzzle
+                    problema.resolvido = valor;
+                    AtivarSetasFuga(valor);
+                    VerificarSolucao();
+                }
+                else if (valor && !problema.resolvido)
                 {
                     toggle.isOn = false;
                     IniciarPuzzle(index);
@@ -87,10 +100,66 @@ public class PainelDiagnostico : MonoBehaviour
                     VerificarSolucao();
                 }
             });
+            //    if (valor && !problema.resolvido)
+            //    {
+            //        toggle.isOn = false;
+            //        IniciarPuzzle(index);
+            //    }
+            //    else
+            //    {
+            //        problema.resolvido = valor;
+            //        VerificarSolucao();
+
+            //        if (problema.descricao == descricaoAtivarSetas)
+            //        {
+            //            AtivarSetasFuga(valor);
+            //        }
+            //    }
+
+            //});
         }
     }
 
 
+
+    public void AtivarSetasFuga(bool ativar)
+    {
+        foreach (var seta in setasFuga)
+        {
+            if (seta != null)
+            {
+                seta.gameObject.SetActive(ativar);
+
+                // Se ativando, configura os alvos das setas
+                if (ativar)
+                {
+                    // Encontra todos os pontos de fuga selecionados
+                    PontoDeFuga[] pontosFuga = FindObjectsOfType<PontoDeFuga>();
+                    List<Transform> alvos = new List<Transform>();
+
+                    foreach (var ponto in pontosFuga)
+                    {
+                        if (ponto.selecionado)
+                        {
+                            alvos.Add(ponto.transform);
+                        }
+                    }
+
+                    // Configura os alvos nas setas (assumindo que você tem 2 setas)
+                    if (alvos.Count > 0)
+                    {
+                        if (setasFuga.Count >= 1 && alvos.Count >= 1)
+                            setasFuga[0].target = alvos[0];
+
+                        if (setasFuga.Count >= 2 && alvos.Count >= 2)
+                            setasFuga[1].target = alvos[1];
+                        else if (setasFuga.Count >= 2)
+                            setasFuga[1].target = alvos[0]; // Se só houver um ponto, ambas apontam
+                    }
+                }
+            }
+        }
+    }
     public void RegistrarProblemaResolvido(string nomeProblema)
     {
         foreach (var problema in barragemAtual.problemas)
@@ -109,11 +178,26 @@ public class PainelDiagnostico : MonoBehaviour
     {
         FecharPainel();
 
+        // Verifica se é o problema de Zonas de Fuga (não deve ter puzzle)
+        if (barragemAtual.problemas[indexProblema].descricao == descricaoAtivarSetas)
+        {
+            Debug.Log("Zonas de Fuga não requerem puzzle");
+            return;
+        }
+
+        // Restante do código original...
         if (indexProblema < 0 || indexProblema >= puzzlesPrefabs.Count)
         {
             Debug.LogError("Índice de puzzle inválido!");
             return;
         }
+
+
+        //if (indexProblema < 0 || indexProblema >= puzzlesPrefabs.Count)
+        //{
+        //    Debug.LogError("Índice de puzzle inválido!");
+        //    return;
+        //}
 
         if (puzzleAtual != null) Destroy(puzzleAtual);
 
@@ -143,17 +227,17 @@ public class PainelDiagnostico : MonoBehaviour
             }
 
 
-        PuzzleEstabilidade puzzleEstabilidade = puzzleAtual.GetComponent<PuzzleEstabilidade>();
-        if (puzzleEstabilidade != null)
-        {
-            puzzleEstabilidade.onPuzzleComplete = () =>
-            {
-                barragemAtual.problemas[indexProblema].resolvido = true;
-                CameraManager.Instance.VoltarAoJogador();
-                Destroy(puzzleAtual);
-                AbrirPainel(barragemAtual);
-            };
-        }
+        //PuzzleEstabilidade puzzleEstabilidade = puzzleAtual.GetComponent<PuzzleEstabilidade>();
+        //if (puzzleEstabilidade != null)
+        //{
+        //    puzzleEstabilidade.onPuzzleComplete = () =>
+        //    {
+        //        barragemAtual.problemas[indexProblema].resolvido = true;
+        //        CameraManager.Instance.VoltarAoJogador();
+        //        Destroy(puzzleAtual);
+        //        AbrirPainel(barragemAtual);
+        //    };
+        //}
     }
 
     void VerificarSolucao()

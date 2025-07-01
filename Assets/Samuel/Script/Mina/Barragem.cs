@@ -10,19 +10,20 @@ public class Barragem : MonoBehaviour
         public string descricao;
         public bool resolvido;
         public bool critico; // Adicione esta linha
+       
     }
 
     public List<Problema> problemas = new List<Problema>(){
-        new Problema(){
-            descricao = "Estabilidade do Talude",
-            critico = true // Marque quais problemas são críticos
-        },
         new Problema(){
             descricao = "Nível de água acima do recomendado",
             critico = true
         },
         new Problema(){
             descricao = "Sensores de pressão com falha",
+            critico = false
+        },
+        new Problema(){
+            descricao = "Zonas de Fuga Identificadas",
             critico = false
         }
     };
