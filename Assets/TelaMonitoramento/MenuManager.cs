@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     public GameObject painelCutscene;
 
     public VideoPlayer cutscenePlayer;
+    private bool cutscenePausada = false;
 
     public void AbrirConfiguracoes()
     {
@@ -55,5 +56,21 @@ public class MenuManager : MonoBehaviour
     private void OnCutsceneTerminou(VideoPlayer vp)
     {
         SceneManager.LoadScene("TelaMonitoramento");
+    }
+    public void AlternarPauseCutscene()
+    {
+        if (cutscenePlayer == null || !cutscenePlayer.isPrepared)
+            return;
+
+        if (cutscenePausada)
+        {
+            cutscenePlayer.Play();
+            cutscenePausada = false;
+        }
+        else
+        {
+            cutscenePlayer.Pause();
+            cutscenePausada = true;
+        }
     }
 }
