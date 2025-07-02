@@ -8,7 +8,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-/*
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -208,4 +208,4 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnMoviment(InputAction.CallbackContext context);
     }
-}*/
+}
