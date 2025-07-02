@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class TuboUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public string idTubo;
@@ -57,7 +58,7 @@ public class TuboUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             }
         }
 
-        // Se não encaixou, volta para a posição original
+        // Se nï¿½o encaixou, volta para a posiï¿½ï¿½o original
         rectTransform.anchoredPosition = posicaoOriginal;
         imagemTubo.color = Color.red;
     }

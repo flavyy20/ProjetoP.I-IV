@@ -24,13 +24,75 @@ public class PuzzleManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        btnFecharPuzzle.onClick.AddListener(FecharPuzzle);
+        //btnFecharPuzzle.onClick.AddListener(FecharPuzzle);
+
+
+        //if (painelPuzzle == null)
+        //{
+        //    painelPuzzle = GameObject.Find("PainelPuzzle");
+
+        //    if (painelPuzzle == null)
+        //        Debug.LogError("PainelPuzzle não encontrado na cena!");
+        //}
+
+        if (painelPuzzle == null)
+        {
+            var todosOsPainéis = Resources.FindObjectsOfTypeAll<GameObject>();
+            foreach (var cg in todosOsPainéis)
+            {
+                
+                if (cg.gameObject.name == "PainelPuzzle") 
+                {
+                    Debug.Log("entrou no if");
+                    painelPuzzle = cg.gameObject;
+                    break;
+                }
+            }
+
+            if (painelPuzzle == null)
+            {
+                Debug.LogError("PainelPuzzle não foi encontrado, mesmo desativado.");
+            }
+        }
+
+       
+
+        if (btnFecharPuzzle == null && painelPuzzle != null)
+        {
+            btnFecharPuzzle = painelPuzzle.GetComponentInChildren<Button>();
+        }
+        if (painelPuzzle != null)
+        {
+            painelPuzzle.SetActive(false);
+        }
+        AbrirPuzzle();
+        btnFecharPuzzle?.onClick.AddListener(FecharPuzzle);
     }
 
     public void AbrirPuzzle()
     {
+        if (painelPuzzle == null)
+        {
+            Debug.LogError("Painel do puzzle não está atribuído no Inspector!");
+            return;
+        }
+
+        // Ativa o painel e traz para frente
         painelPuzzle.SetActive(true);
+        painelPuzzle.transform.SetAsLastSibling();
+
+        // Garante que o painel está visível
+        CanvasGroup canvasGroup = painelPuzzle.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1;
+            canvasGroup.blocksRaycasts = true;
+            canvasGroup.interactable = true;
+        }
+
         ResetarPuzzle();
+       // painelPuzzle.SetActive(true);
+        //ResetarPuzzle();
     }
 
     public void FecharPuzzle()
