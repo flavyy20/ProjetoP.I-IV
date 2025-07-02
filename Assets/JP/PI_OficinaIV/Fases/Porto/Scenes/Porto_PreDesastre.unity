@@ -522,9 +522,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab86d86ac4916d44b9b54f7cb478b3de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fundoGrid: {fileID: 9201863335408584582, guid: c1e55e6af10aa0c4088e1f4863158418, type: 3}
-  largura: 4
-  altura: 4
+  canoRetoPrefab: {fileID: 1621305537762371531, guid: ff9215ea2279bcd4cb75e7aacd00b64f, type: 3}
+  canoCurvoPrefab: {fileID: 181064984394691204, guid: 69c6b5b51f88d3d4bb0a1ae3a819af52, type: 3}
+  fundoPrefab: {fileID: 9201863335408584582, guid: c1e55e6af10aa0c4088e1f4863158418, type: 3}
+  largura: 5
+  altura: 5
   espaco: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
