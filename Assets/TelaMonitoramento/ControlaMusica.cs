@@ -21,7 +21,7 @@ public class ControlaMusica : MonoBehaviour
     void Start()
     {
         video.started += OnVideoStarted;
-        video.loopPointReached += OnVideoEnded; // Quando o vídeo terminar
+        video.loopPointReached += OnVideoEnded; 
     }
 
     void OnVideoStarted(VideoPlayer vp)
@@ -44,7 +44,7 @@ public class ControlaMusica : MonoBehaviour
             musicaCutscene.Stop();
         }
 
-        // Carrega a próxima cena (defina o nome no Inspector)
+       
         SceneManager.LoadScene("TelaMonitoramento");
     }
 }
