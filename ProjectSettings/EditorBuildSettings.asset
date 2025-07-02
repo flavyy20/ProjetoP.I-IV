@@ -6,28 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samuel/Scenes/TelaIInicio.unity
-    guid: 3c35d2704fe4cab4b8c9ccf413790a60
+    path: Assets/TelaMonitoramento/TelaMonitoramento.unity
+    guid: d49dbb601fc907c4fb65698a00957ec8
   - enabled: 1
     path: Assets/Samuel/Scenes/Mina.unity
     guid: 1a38cb39c402c174fa7726501b6e2d83
   - enabled: 1
-    path: Assets/Samuel/Scenes/Baco.unity
-    guid: 7425ec66bba283344b82da536ef1e147
+    path: Assets/Samuel/Scenes/MinaPosDesastre.unity
+    guid: 6e8163f47ec7f294996312ef1423ab34
   - enabled: 1
-    path: Assets/Gabriel/Scenes/cenaTeste_GB.unity
-    guid: a81bfd4e29f1fce478e5ae5c4a45949a
-  - enabled: 1
-    path: Assets/Flavia/Scenes/TelaMonitoramento.unity
-    guid: 0961f5be68d46924fa4525fb7bb40507
-  - enabled: 1
-    path: Assets/Flavia/Scenes/teste.unity
-    guid: ec4b6133035ce4b46a72c05edc4920fe
-  - enabled: 1
-    path: Assets/Thasso/Scenes/Fase_Marko.unity
-    guid: f97da183075e1a44fa8586229827f5a5
-  - enabled: 1
-    path: Assets/Thasso/TelaMonitoramento/TelaMonitoramento.unity
-    guid: d49dbb601fc907c4fb65698a00957ec8
+    path: Assets/Thasso/Scenes/fase_Marko.unity
+    guid: fe71320c5bc14b2419313c835c3516b0
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

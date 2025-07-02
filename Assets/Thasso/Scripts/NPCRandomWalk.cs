@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPCRandomWalk : MonoBehaviour
@@ -8,10 +9,20 @@ public class NPCRandomWalk : MonoBehaviour
     public float followDistance = 50f;
     public float moveInterval = 3f;
     public float randomWalkRadius = 30f;
+    public LayerMask groundLayer;
+    public float groundCheckRadius = 0.5f;
 
+    private bool alreadyCounted = false;
+
+    private bool wasOnWalkable = false;
     private NavMeshAgent agent;
     private float timer;
     private bool isCaught = false;
+    private float groundedTime = 0f;
+    private float requiredGroundedDuration = 1.5f;
+
+    private bool isInSafeZone = false;
+    public Collider safeZoneCollider; //  público agora para você arrastar manualmente no Inspector
 
     private Renderer rend;
     private Color originalColor;
@@ -20,40 +31,64 @@ public class NPCRandomWalk : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         rend = GetComponent<Renderer>();
+
         if (rend != null)
             originalColor = rend.material.color;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = gameObject.AddComponent<Rigidbody>();
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
 
         timer = moveInterval;
     }
 
     void Update()
     {
-        if (isCaught || !agent.isOnNavMesh)
-            return;
+        CheckIfInSafeZone(); //  verifica constantemente se está na zona segura
 
-        // 🔥 PRIORIDADE: verificar se está sobre solo de lava
-        Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
+        if (isCaught)
         {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
-            {
-                CaughtByLava();
-                return; // importante: parar aqui se caiu
-            }
+            TryDetachFromPlayer();
+            return;
         }
 
-        // Se o player estiver perto, segue
-        if (player != null)
+        if (!agent.isOnNavMesh)
+            return;
+
+        bool standingNow = IsStandingOnWalkable();
+        Debug.Log($"[{gameObject.name}] isStandingOnWalkable: {standingNow}");
+
+        if (!wasOnWalkable)
         {
-            float distance = Vector3.Distance(transform.position, player.position);
-            if (distance < followDistance)
+            if (standingNow)
             {
-                agent.SetDestination(player.position);
+                wasOnWalkable = true;
+                Debug.Log($"[{gameObject.name}] Começou em chão Walkable.");
+            }
+        }
+        else
+        {
+            if (!standingNow)
+            {
+                Debug.Log($"[{gameObject.name}] Perdeu contato com Walkable. Vai cair.");
+                CaughtByLava();
                 return;
             }
         }
 
-        // Caso contrário, anda aleatoriamente
+        if (isInSafeZone)
+        {
+            // está seguro, apenas anda aleatoriamente dentro da zona
+        }
+        else if (player != null && Vector3.Distance(transform.position, player.position) < followDistance)
+        {
+            agent.SetDestination(player.position);
+            return;
+        }
+
         timer += Time.deltaTime;
         if (timer >= moveInterval)
         {
@@ -62,19 +97,93 @@ public class NPCRandomWalk : MonoBehaviour
         }
     }
 
+    void CheckIfInSafeZone() //  novo método de detecção
+    {
+        if (safeZoneCollider == null)
+            return;
+
+        Vector3 pos = transform.position;
+        Vector3 zoneMin = safeZoneCollider.bounds.min;
+        Vector3 zoneMax = safeZoneCollider.bounds.max;
+
+        bool insideXZ = pos.x >= zoneMin.x && pos.x <= zoneMax.x &&
+                        pos.z >= zoneMin.z && pos.z <= zoneMax.z;
+
+        if (insideXZ && !isInSafeZone)
+        {
+            isInSafeZone = true;
+            Debug.Log($"{gameObject.name} entrou na Zona Segura (2D XZ).");
+
+            if (!alreadyCounted)
+            {
+                alreadyCounted = true;
+                GameManagerM.Instance.RegistrarResgate(); // atualiza contador no GameManager
+            }
+        }
+        else if (!insideXZ && isInSafeZone)
+        {
+            isInSafeZone = false;
+            Debug.Log($"{gameObject.name} saiu da Zona Segura.");
+        }
+    }
+
+    bool IsStandingOnWalkable()
+    {
+        Vector3 checkPos = transform.position + Vector3.down * 0.1f;
+        float checkRadius = 50f;
+
+        Collider[] hits = Physics.OverlapSphere(checkPos, checkRadius);
+        foreach (var col in hits)
+        {
+            string layerName = LayerMask.LayerToName(col.gameObject.layer);
+            Debug.Log($"[{gameObject.name}] Detectado collider '{col.gameObject.name}' na layer '{layerName}'");
+
+            if (layerName == "Walkable")
+                return true;
+        }
+
+        Debug.Log($"[{gameObject.name}] Nenhum chão Walkable detectado.");
+        return false;
+    }
+
     void MoveRandomly()
     {
         if (isCaught)
             return;
 
-        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * randomWalkRadius;
-        randomDirection += transform.position;
+        Vector3 destination;
 
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 30f, NavMesh.AllAreas))
+        if (isInSafeZone && safeZoneCollider != null)
         {
-            agent.SetDestination(hit.position);
+            Bounds bounds = safeZoneCollider.bounds;
+            destination = new Vector3(
+                Random.Range(bounds.min.x, bounds.max.x),
+                transform.position.y,
+                Random.Range(bounds.min.z, bounds.max.z)
+            );
+        }
+        else
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * randomWalkRadius;
+            randomDirection += transform.position;
+
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, 30f, NavMesh.AllAreas))
+            {
+                destination = hit.position;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (NavMesh.SamplePosition(destination, out NavMeshHit finalHit, 5f, NavMesh.AllAreas))
+        {
+            agent.SetDestination(finalHit.position);
         }
     }
+
+    //  Removido OnTriggerEnter (não é mais necessário)
 
     public void CaughtByLava()
     {
@@ -83,33 +192,108 @@ public class NPCRandomWalk : MonoBehaviour
 
         isCaught = true;
 
-        if (agent != null)
-        {
-            agent.isStopped = true;
-            agent.ResetPath();
-            agent.enabled = false;
-        }
+        Debug.Log($"NPC {gameObject.name} foi pego pela lava!");
+
+        agent.ResetPath();
+        agent.isStopped = true;
+        agent.enabled = false;
 
         if (rend != null)
-        {
             rend.material.color = Color.red;
-        }
 
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-        }
+        if (rb == null)
+            rb = gameObject.AddComponent<Rigidbody>();
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
+        rb.AddForce(Vector3.down * 20f, ForceMode.Impulse);
+
+        StartCoroutine(SinkAfterFall(rb, 3f, 90f));
     }
-    public void StopMovement()
+
+    private IEnumerator SinkAfterFall(Rigidbody rb, float delay, float extraDepth)
     {
-        if (agent != null)
+        yield return new WaitForSeconds(delay);
+
+        float elapsed = 0f;
+        float duration = 2f;
+        Vector3 startPos = transform.position;
+        Vector3 endPos = startPos - new Vector3(0, extraDepth, 0);
+
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        while (elapsed < duration)
         {
-            agent.isStopped = true;
-            agent.ResetPath();
+            transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
         }
 
-        isCaught = true; // Garante que ele pare de tentar andar
+        transform.position = endPos;
+
+        yield return new WaitForSeconds(0.5f); // Pequena pausa antes de remover
+
+        Destroy(gameObject); // Destrói o NPC
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3 checkPos = transform.position + Vector3.down * 0.1f;
+        Gizmos.DrawWireSphere(checkPos, groundCheckRadius);
+    }
+
+    public bool IsCaught()
+    {
+        return isCaught;
+    }
+
+    public void AttachToPlayer(Transform playerTransform)
+    {
+        transform.SetParent(playerTransform);
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Collider>().enabled = false;
+
+        Debug.Log($"{gameObject.name} foi preso ao player.");
+    }
+
+    public void TryDetachFromPlayer()
+    {
+        if (!isCaught || transform.parent == null)
+            return;
+
+        if (IsStandingOnWalkable())
+        {
+            groundedTime += Time.deltaTime;
+
+            if (groundedTime >= requiredGroundedDuration)
+            {
+                transform.SetParent(null);
+                GetComponent<Collider>().enabled = true;
+                GetComponent<Rigidbody>().isKinematic = true;
+
+                agent.enabled = true;
+                agent.isStopped = false;
+
+                isCaught = false;
+                groundedTime = 0f;
+
+                if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+                    transform.position = hit.position;
+
+                if (rend != null)
+                    rend.material.color = originalColor;
+
+                Debug.Log($"{gameObject.name} tocou o chão e foi solto do player.");
+            }
+        }
+        else
+        {
+            groundedTime = 0f;
+        }
     }
 }

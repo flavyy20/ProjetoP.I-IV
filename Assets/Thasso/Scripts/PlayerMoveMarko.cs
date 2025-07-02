@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMoveMarko : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class PlayerMoveMarko : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 moveDirection;
+
+    private float timer = 0f; 
+    public float minTimeToEnter = 60f; 
 
     void Start()
     {
@@ -19,6 +23,8 @@ public class PlayerMoveMarko : MonoBehaviour
         float moveZ = Input.GetAxisRaw("Vertical");
 
         moveDirection = new Vector3(-moveX, 0f, -moveZ).normalized;
+
+        timer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -28,13 +34,25 @@ public class PlayerMoveMarko : MonoBehaviour
             rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
 
             Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
-
-            // Corrigido para inverter a rotação
             Quaternion correction = Quaternion.Euler(0f, -90f, 0f);
-
             Quaternion targetRotation = lookRotation * correction;
 
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("FinalizarMarko"))
+        {
+            if (timer >= minTimeToEnter)
+            {
+                SceneManager.LoadScene("TelaMonitoramento"); 
+            }
+            else
+            {
+                Debug.Log("Ainda existe agentes para resgatar!");
+            }
         }
     }
 }

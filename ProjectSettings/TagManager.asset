@@ -12,6 +12,9 @@ TagManager:
   - Ground
   - Floor
   - SafeZone
+  - Barragem
+  - DrenoFinal
+  - FinalizarMarko
   - CinemachineTarget
   - Parede
   layers:
@@ -22,6 +25,8 @@ TagManager:
   - Water
   - UI
   - Npc
+  - Barragem
+  - NPC
   - Parede
   - 
   - 

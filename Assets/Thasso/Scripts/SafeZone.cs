@@ -12,7 +12,7 @@ public class SafeZone : MonoBehaviour
             NPCRandomWalk npc = other.GetComponent<NPCRandomWalk>();
             if (npc != null)
             {
-                npc.StopMovement(); // Método que vamos garantir que exista
+               // npc.StopMovement(); // Método que vamos garantir que exista
             }
         }
     }

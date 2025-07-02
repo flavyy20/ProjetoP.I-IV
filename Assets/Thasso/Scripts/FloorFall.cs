@@ -1,30 +1,55 @@
 using UnityEngine;
-using UnityEngine.AI;
+using System.Collections.Generic;
+using System.Collections;
 
 public class FloorFall : MonoBehaviour
 {
-    [Header("Tempo de queda personalizado")]
-    public float fallTime = 5f; // Agora você define o tempo direto no Inspector
-
-    [Header("Parâmetros da queda")]
+    public float fallTime = 5f;
     public int blinkCount = 5;
     public float blinkInterval = 0.3f;
     public float fallDistance = 0.6f;
 
-    private Renderer rend;
-    private Color originalColor;
-    private Vector3 initialPosition;
+    private List<Renderer> renderers = new List<Renderer>();
+    private List<Color> originalColors = new List<Color>();
 
     void Start()
     {
-        rend = GetComponent<Renderer>();
-        if (rend != null)
-            originalColor = rend.material.color;
+        EnsureCollidersAndLayers();
 
-        initialPosition = transform.position;
+        renderers.Clear();
+        renderers.AddRange(GetComponentsInChildren<Renderer>());
 
-        // Agende a queda automática com base no tempo definido no Inspector
+        originalColors.Clear();
+        foreach (var rend in renderers)
+        {
+            originalColors.Add(rend.material.color);
+        }
+
         Invoke(nameof(StartBlink), fallTime);
+    }
+
+    void EnsureCollidersAndLayers()
+    {
+        int layer = gameObject.layer;
+
+        if (GetComponent<Collider>() == null)
+            gameObject.AddComponent<BoxCollider>();
+
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = layer;
+
+            bool hasRenderer = child.GetComponent<MeshRenderer>() != null;
+            bool hasCollider = child.GetComponent<Collider>() != null;
+
+            if (hasRenderer && !hasCollider)
+            {
+                if (child.GetComponent<MeshFilter>() != null)
+                    child.gameObject.AddComponent<MeshCollider>();
+                else
+                    child.gameObject.AddComponent<BoxCollider>();
+            }
+        }
     }
 
     public void StartBlink()
@@ -38,14 +63,10 @@ public class FloorFall : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
-            if (rend != null)
-                rend.material.color = Color.red;
-
+            SetRenderersColor(Color.red);
             yield return new WaitForSeconds(blinkInterval);
 
-            if (rend != null)
-                rend.material.color = originalColor;
-
+            SetRenderersToOriginalColors();
             yield return new WaitForSeconds(blinkInterval);
 
             transform.position -= new Vector3(0f, step, 0f);
@@ -54,34 +75,55 @@ public class FloorFall : MonoBehaviour
         Fall();
     }
 
-    private void Fall()
+    void SetRenderersColor(Color color)
     {
-        gameObject.layer = LayerMask.NameToLayer("Default");
-
-        if (rend != null)
-            rend.material.color = Color.red;
-
-        StopNPCsOnTop();
+        foreach (var rend in renderers)
+            if (rend != null) rend.material.color = color;
     }
 
-    private void StopNPCsOnTop()
+    void SetRenderersToOriginalColors()
     {
-        Collider floorCollider = GetComponent<Collider>();
-        if (floorCollider == null)
-            return;
+        for (int i = 0; i < renderers.Count; i++)
+            if (renderers[i] != null) renderers[i].material.color = originalColors[i];
+    }
 
-        Vector3 center = floorCollider.bounds.center + Vector3.up * 0.1f;
-        Vector3 halfExtents = floorCollider.bounds.extents + new Vector3(0f, 0.5f, 0f);
+    private void Fall()
+    {
+        int defaultLayer = LayerMask.NameToLayer("Default");
+        gameObject.layer = defaultLayer;
+        foreach (Transform child in transform)
+            child.gameObject.layer = defaultLayer;
 
-        Collider[] hits = Physics.OverlapBox(center, halfExtents);
-        foreach (Collider hit in hits)
+        SetRenderersColor(Color.red);
+
+        foreach (Collider col in GetComponentsInChildren<Collider>())
         {
-            if (hit.CompareTag("NPC"))
-            {
-                NPCRandomWalk npc = hit.GetComponent<NPCRandomWalk>();
-                if (npc != null)
-                    npc.CaughtByLava();
-            }
+            col.enabled = false; // remove o chão fisicamente
         }
+
+        StartCoroutine(MoveDownRoutine());
+    }
+
+    private IEnumerator MoveDownRoutine()
+    {
+        float elapsed = 0f;
+        float duration = 3f;
+        float distance = 200f; // Aprofunde como quiser, ex: 200f
+
+        Vector3 startPos = transform.position;
+        Vector3 endPos = startPos - new Vector3(0f, distance, 0f);
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, endPos, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = endPos;
+
+        yield return new WaitForSeconds(0.5f); // Espera para garantir a queda completa
+
+        Destroy(gameObject); // Remove o chão
     }
 }
