@@ -8,8 +8,10 @@ public class GirarPontos : MonoBehaviour
 {
     [SerializeField] private List<Direction> conexoes = new List<Direction>();
     [SerializeField] private int posicaoX, posicaoY;
+    [SerializeField] private bool travado = false;
 
     public List<Direction> Conexoes => conexoes;
+    public bool Travado => travado;
 
     public void SetarConexoes(List<Direction> novasConexoes)
     {
@@ -22,18 +24,24 @@ public class GirarPontos : MonoBehaviour
         posicaoY = gridY;
     }
 
+    public void TravarPeca()
+    {
+        travado = true;
+    }
+
     private void OnMouseDown()
     {
+        if (travado) return;
+
         Debug.Log($"Cano clicado na posição ({posicaoX}, {posicaoY})");
         transform.Rotate(0f, 0f, -90f); // gira visualmente no sentido horário
-        ConectarRotacao();             // gira lógica das conexões no sentido horário
+        ConectarRotacao();              // gira logicamente as conexões no sentido horário
     }
 
     public void ConectarRotacao()
     {
         for (int i = 0; i < conexoes.Count; i++)
         {
-            // Rotaciona 90 graus no sentido horário
             conexoes[i] = (Direction)(((int)conexoes[i] + 1) % 4);
         }
     }
@@ -43,4 +51,3 @@ public class GirarPontos : MonoBehaviour
         return new Vector2Int(posicaoX, posicaoY);
     }
 }
-
