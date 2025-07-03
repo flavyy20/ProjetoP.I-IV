@@ -21,7 +21,7 @@ public class GameM : MonoBehaviour
     [Header("Pontos de Fuga")]
     public List<PontoDeFuga> pontosFugaSelecionados = new List<PontoDeFuga>();
     public int totalNPCsNosPontos = 0;
-    public int npcsResgatados = 0;
+    public static int npcsResgatados = 0;
 
     [Header("UI")]
     public GameObject uiPontosFuga;
@@ -31,6 +31,7 @@ public class GameM : MonoBehaviour
     public string cenaPosDesastre = "MinaPosDesastre";
 
     private bool transicaoEmAndamento = false;
+    public NPC npcres; 
 
     [System.Serializable]
     public class DadosPersistentes
@@ -42,13 +43,19 @@ public class GameM : MonoBehaviour
 
     void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
             DadosPersistentes.Instancia = new DadosPersistentes();
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            // Resetar contadores ao iniciar
+            npcsResgatados = 0;
+            totalNPCsNosPontos = 0;
         }
+        
         else
         {
             Destroy(gameObject);
@@ -66,6 +73,10 @@ public class GameM : MonoBehaviour
         {
             tempoDecorrido = tempoMaximoPreDesastre - 10;
         }
+       
+
+        Debug.Log($"Total NPCs nos pontos: {totalNPCsNosPontos}");
+        Debug.Log($"NPCs resgatados: {npcsResgatados}");
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -80,34 +91,7 @@ public class GameM : MonoBehaviour
 
     IEnumerator CarregarNPCsComDelay()
     {
-        //yield return null;
-
-        //// Limpeza de NPCs existentes
-        //NPC[] npcsExistentes = FindObjectsOfType<NPC>();
-        //foreach (NPC npc in npcsExistentes)
-        //{
-        //    Destroy(npc.gameObject);
-        //}
-
-        //// Reconstrução dos pontos de fuga
-        //pontosFugaSelecionados.Clear();
-        //foreach (var data in DadosPersistentes.Instancia.pontosData)
-        //{
-        //    PontoDeFuga ponto = GameObject.Find(data.nomePonto)?.GetComponent<PontoDeFuga>();
-        //    if (ponto != null)
-        //    {
-        //        ponto.npcsPresentes = data.npcsPresentes;
-        //        ponto.selecionado = data.selecionado;
-        //        pontosFugaSelecionados.Add(ponto);
-
-        //        if (ponto.selecionado)
-        //        {
-        //            List<DadosNPC> npcsDestePonto = DadosPersistentes.Instancia.npcsData
-        //                .Where(n => n.pontoFugaID == data.nomePonto)
-        //                .ToList();
-
-        //            ponto.SpawnarNPCsPosDesastre(npcsDestePonto);
-
+        
         yield return null; // Espera um frame
 
         // Limpa NPCs existentes (limpeza opcional)
@@ -166,32 +150,7 @@ public class GameM : MonoBehaviour
 
     public void IniciarPosDesastre()
     {
-        //    if (transicaoEmAndamento) return;
-
-        //    transicaoEmAndamento = true;
-        //    faseAtual = Fase.PosDesastre;
-
-        //    // Preparar dados para persistência
-        //    PrepararTransicao();
-        //    DadosPersistentes.Instancia.pontosData = pontosFugaData;
-        //    DadosPersistentes.Instancia.npcsData = npcsParaSpawnar;
-
-        //    // Carregar a cena
-        //    SceneManager.LoadScene(cenaPosDesastre);
-
-        //if (transicaoEmAndamento) return;
-        //transicaoEmAndamento = true;
-
-        //// Prepara os dados para a próxima cena
-        //PrepararTransicao();
-        //DadosPersistentes.Instancia.pontosData = pontosFugaData;
-        //DadosPersistentes.Instancia.npcsData = npcsParaSpawnar;
-
-        //// Força salvar os dados (opcional, apenas se estiver usando PlayerPrefs)
-        //PlayerPrefs.SetString("DadosJogo", JsonUtility.ToJson(DadosPersistentes.Instancia));
-        //PlayerPrefs.Save();
-
-        //SceneManager.LoadScene(cenaPosDesastre);
+        
 
 
 
@@ -203,7 +162,7 @@ public class GameM : MonoBehaviour
         DadosPersistentes.Instancia.pontosData = pontosFugaData;
         DadosPersistentes.Instancia.npcsData = npcsParaSpawnar;
 
-        SceneManager.LoadScene(cenaPosDesastre); // Troca de cena
+        SceneManager.LoadScene(cenaPosDesastre);
 
     }
 
@@ -234,16 +193,27 @@ public class GameM : MonoBehaviour
     // Chamado ao resgatar NPCs no pós-desastre
     public void AtualizarNPCsResgatados(int quantidade)
     {
+
         npcsResgatados += quantidade;
         AtualizarUI();
+        Debug.Log($"NPCs resgatados: {npcsResgatados}/{totalNPCsNosPontos}");
 
-        // Verifica se todos foram resgatados
-        if (npcsResgatados >= totalNPCsNosPontos)
+        // Verificação corrigida
+        if (npcsResgatados >= totalNPCsNosPontos && totalNPCsNosPontos > 0)
         {
             Debug.Log("Todos NPCs resgatados! Missão cumprida!");
-            // Adicione aqui lógica de vitória
+            StartCoroutine(CarregarTelaMonitoramentoComDelay());
         }
     }
+
+    IEnumerator CarregarTelaMonitoramentoComDelay()
+    {
+        yield return new WaitForSeconds(2f); // Espera 2 segundos para mostrar efeitos visuais
+        SceneManager.LoadScene("TelaMonitoramento");
+    }
+
+   
+
 
     // Atualiza elementos da UI
     void AtualizarUI()
@@ -261,21 +231,7 @@ public class GameM : MonoBehaviour
         }
     }
 
-    // Chamado para transicionar para pós-desastre
-    //public void IniciarPosDesastre()
-    //{
-    //    faseAtual = Fase.PosDesastre;
-    //    Debug.Log("Fase pós-desastre iniciada!");
-
-    //    // Ativa NPCs nos pontos selecionados
-    //    foreach (PontoDeFuga ponto in pontosFugaSelecionados)
-    //    {
-    //        // Garante que os NPCs serão spawnados
-    //        ponto.GetComponent<PontoDeFuga>().SpawnarNPCs();
-    //    }
-
-    //    AtualizarUI();
-    //}
+   
 
 
     [System.Serializable]
@@ -300,9 +256,13 @@ public class GameM : MonoBehaviour
     public void PrepararTransicao()
     {
         npcsParaSpawnar.Clear();
+        pontosFugaData.Clear();
+
+        totalNPCsNosPontos = 0; // Reset antes de recalcular
 
         foreach (PontoDeFuga ponto in pontosFugaSelecionados)
         {
+            totalNPCsNosPontos += ponto.npcsPresentes;
             foreach (NPC npc in ponto.npcsNoPonto)
             {
                 npcsParaSpawnar.Add(new DadosNPC()
@@ -357,25 +317,7 @@ public class GameM : MonoBehaviour
         }
     }
 
-    //public void IniciarPosDesastre()
-    //{
-    //    //if (faseAtual != Fase.PreDesastre) return;
-
-    //    //faseAtual = Fase.PosDesastre;
-    //    //PrepararTransicao();
-    //    //SceneManager.LoadScene(cenaPosDesastre);
-
-
-    //    // Salva todos os dados antes de trocar de cena
-    //    DadosPersistentes.Instancia.pontosData = pontosFugaData;
-    //    DadosPersistentes.Instancia.npcsData = npcsParaSpawnar;
-
-    //    // Força salvar os dados
-    //    PlayerPrefs.SetString("DadosJogo", JsonUtility.ToJson(DadosPersistentes.Instancia));
-    //    PlayerPrefs.Save();
-
-    //    SceneManager.LoadScene(cenaPosDesastre);
-    //}
+    
 
 
     public void PrepararParaMudancaCena()
@@ -397,37 +339,5 @@ public class GameM : MonoBehaviour
     }
 
    
-    //public void IniciarPosDesastre()
-    //{
-    //    if (faseAtual == Fase.PreDesastre)
-    //    {
-    //        faseAtual = Fase.PosDesastre;
-    //        Debug.Log("Fase pós-desastre iniciada por término do tempo!");
-
-    //        if (Application.CanStreamedLevelBeLoaded(cenaPosDesastre))
-    //        {
-    //            SceneManager.LoadScene(cenaPosDesastre);
-    //        }
-    //        else
-    //        {
-    //            Debug.LogError($"Cena '{cenaPosDesastre}' não encontrada!");
-    //        }
-    //        foreach (PontoDeFuga ponto in pontosFugaSelecionados)
-    //        {
-    //            if (ponto != null)
-    //            {
-    //                // Encontra o ponto correspondente na nova cena
-    //                PontoDeFuga novoPonto = FindObjectsOfType<PontoDeFuga>()
-    //                    .FirstOrDefault(p => p.name == ponto.name);
-
-    //                if (novoPonto != null)
-    //                {
-    //                    novoPonto.selecionado = true;
-    //                    //novoPonto.SpawnarNPCs();
-    //                    novoPonto.SpawnarNPCsPosDesastre();
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+    
 }

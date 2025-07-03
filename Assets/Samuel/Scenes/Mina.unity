@@ -296,7 +296,7 @@ PrefabInstance:
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: prefabNPC
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 3e00dfdb04ec42d4cb67dfa5a59369b4, type: 3}
+      objectReference: {fileID: 7879472955632908313, guid: d81ac4cdc95839947bf34572ebd694fe, type: 3}
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: selecionado
       value: 0
@@ -323,15 +323,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -510.9
+      value: -423.3
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -31.1
+      value: -49.2
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -253
+      value: -226.2
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c51ce491b0167948985119d0600ac10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidadeMovimento: 30
+  velocidadeMovimento: 50
   cameraPrincipal: {fileID: 1458321191}
   animator: {fileID: 256245373}
   velocidadeRotacao: 6
@@ -1689,11 +1689,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 844b2cbb0c6e2a445bcb91249c0ae9bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31.4
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 844b2cbb0c6e2a445bcb91249c0ae9bc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 329
+      value: -58
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 844b2cbb0c6e2a445bcb91249c0ae9bc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2858,10 +2858,10 @@ MonoBehaviour:
   textoTempo: {fileID: 1541560886}
   pontosFugaSelecionados: []
   totalNPCsNosPontos: 0
-  npcsResgatados: 0
   uiPontosFuga: {fileID: 0}
   textoNPCsResgatados: {fileID: 0}
   cenaPosDesastre: MinaPosDesastre
+  npcres: {fileID: 0}
   npcsParaSpawnar: []
   pontosFugaData: []
 --- !u!114 &1118567829
@@ -3705,7 +3705,7 @@ PrefabInstance:
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: prefabNPC
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 3e00dfdb04ec42d4cb67dfa5a59369b4, type: 3}
+      objectReference: {fileID: 7879472955632908313, guid: d81ac4cdc95839947bf34572ebd694fe, type: 3}
     - target: {fileID: 3645190635515372890, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: npcsPresentes
       value: 1
@@ -3728,11 +3728,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -51.8
+      value: -49.4
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -84
+      value: -80.7
       objectReference: {fileID: 0}
     - target: {fileID: 5145024107013399944, guid: 71efa1addaa9da44fa56be04b80a933f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4256,7 +4256,7 @@ Camera:
   m_GameObject: {fileID: 1458321188}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -4282,7 +4282,7 @@ Camera:
   far clip plane: 4936.7
   field of view: 40
   orthographic: 1
-  orthographic size: 53.13
+  orthographic size: 59.4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4307,7 +4307,7 @@ Transform:
   m_GameObject: {fileID: 1458321188}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: -0.3696438, z: 0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: 112.50373, y: 51.323452, z: 316.78323}
+  m_LocalPosition: {x: 112.50373, y: 44.92345, z: -70.216774}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6430,7 +6430,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2042447928}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 53.13
+    OrthographicSize: 59.4
     NearClipPlane: -428.9
     FarClipPlane: 4936.7
     Dutch: 0
@@ -6456,7 +6456,7 @@ Transform:
   m_GameObject: {fileID: 1979427580}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: -0.3696438, z: 0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: 112.50373, y: 51.323452, z: 316.78323}
+  m_LocalPosition: {x: 112.50373, y: 44.92345, z: -70.216774}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

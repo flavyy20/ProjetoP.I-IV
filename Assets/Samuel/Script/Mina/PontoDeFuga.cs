@@ -23,6 +23,7 @@ public class PontoDeFuga : MonoBehaviour
     private Material materialOriginal;
     [SerializeField]
     public  List<NPC> npcsNoPonto = new List<NPC>();
+    [SerializeField]
     private bool todosResgatados = false;
 
     void Start()
@@ -168,35 +169,37 @@ public class PontoDeFuga : MonoBehaviour
     // PÓS-DESASTRE: Tenta resgatar NPCs próximos
     void TentarResgatarNPCs()
     {
+
         float distanciaJogador = Vector3.Distance(transform.position,
-            GameObject.FindGameObjectWithTag("Player").transform.position);
+       GameObject.FindGameObjectWithTag("Player").transform.position);
 
         if (distanciaJogador > raioResgate) return;
 
-        int npcsResgatados = 0;
-        foreach (NPC npc in npcsNoPonto)
+        int npcsResgatadosNestaChamada = 0;
+        foreach (NPC npc in npcsNoPonto.ToArray()) // Usar ToArray para evitar modificação durante iteração
         {
             if (npc != null && !npc.resgatado)
             {
                 npc.Resgatar();
-                npcsResgatados++;
+                npcsResgatadosNestaChamada++;
             }
         }
 
-        if (npcsResgatados > 0)
+        if (npcsResgatadosNestaChamada > 0)
         {
             if (efeitoResgate != null)
                 Instantiate(efeitoResgate, transform.position, Quaternion.identity);
 
-            // Verifica se TODOS foram resgatados
-            todosResgatados = npcsNoPonto.TrueForAll(n => n == null || n.resgatado);
+            todosResgatados = npcsNoPonto.All(n => n == null || n.resgatado);
 
             if (todosResgatados)
             {
                 GetComponent<Renderer>().material = materialResgatado;
-                GameM.instance.AtualizarNPCsResgatados(npcsResgatados);
+                GameM.instance.AtualizarNPCsResgatados(npcsResgatadosNestaChamada);
             }
         }
+
+       
     }
 
     void OnDrawGizmosSelected()
