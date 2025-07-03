@@ -205,9 +205,10 @@ public class GameM : MonoBehaviour
             StartCoroutine(CarregarTelaMonitoramentoComDelay());
         }
     }
-
+    FaseController faseCon;
     IEnumerator CarregarTelaMonitoramentoComDelay()
     {
+        //faseCon.PerderCidade();
         yield return new WaitForSeconds(2f); // Espera 2 segundos para mostrar efeitos visuais
         SceneManager.LoadScene("TelaMonitoramento");
     }

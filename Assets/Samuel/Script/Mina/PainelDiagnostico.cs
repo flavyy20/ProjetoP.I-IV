@@ -25,8 +25,8 @@ public class PainelDiagnostico : MonoBehaviour
     private Barragem barragemAtual;
 
     [Header("Seta de Navegação")]
-    public List<SetaVoadora> setasFuga;  // Arraste as setas aqui no Inspector
-    public string descricaoAtivarSetas = "Zonas de Fuga Identificadas"; // Descrição que ativa as setas
+    public List<SetaVoadora> setasFuga;  
+    public string descricaoAtivarSetas = "Zonas de Fuga Identificadas"; 
 
 
     public static PainelDiagnostico instance;
@@ -100,23 +100,7 @@ public class PainelDiagnostico : MonoBehaviour
                     VerificarSolucao();
                 }
             });
-            //    if (valor && !problema.resolvido)
-            //    {
-            //        toggle.isOn = false;
-            //        IniciarPuzzle(index);
-            //    }
-            //    else
-            //    {
-            //        problema.resolvido = valor;
-            //        VerificarSolucao();
-
-            //        if (problema.descricao == descricaoAtivarSetas)
-            //        {
-            //            AtivarSetasFuga(valor);
-            //        }
-            //    }
-
-            //});
+           
         }
     }
 
@@ -227,26 +211,13 @@ public class PainelDiagnostico : MonoBehaviour
             }
 
 
-        //PuzzleEstabilidade puzzleEstabilidade = puzzleAtual.GetComponent<PuzzleEstabilidade>();
-        //if (puzzleEstabilidade != null)
-        //{
-        //    puzzleEstabilidade.onPuzzleComplete = () =>
-        //    {
-        //        barragemAtual.problemas[indexProblema].resolvido = true;
-        //        CameraManager.Instance.VoltarAoJogador();
-        //        Destroy(puzzleAtual);
-        //        AbrirPainel(barragemAtual);
-        //    };
-        //}
+       
     }
 
+    public FaseController faseCon;
     void VerificarSolucao()
     {
-        //if (barragemAtual.problemas.All(p => p.resolvido))
-        //{
-        //    textoProblemas.text += "\nTODOS OS PROBLEMAS RESOLVIDOS!";
-        //    StartCoroutine(CarregarCenaInicial());
-        //}
+        
 
         if(PuzzleManager.puzzleDrenagemCompleto==true && PuzzlePiezometro.puzzleCompleto == true)
         {
@@ -258,7 +229,7 @@ public class PainelDiagnostico : MonoBehaviour
 
     IEnumerator CarregarCenaInicial()
     {
-        
+       // faseCon.CompletarFase();
         yield return new WaitForSecondsRealtime(1f);
         SceneManager.LoadScene(cenaInicial);
     }

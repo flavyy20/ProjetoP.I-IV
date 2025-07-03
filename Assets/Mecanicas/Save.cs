@@ -6,7 +6,7 @@ using System.IO;
 public class Save : MonoBehaviour
 {
     private string saveFilePath;
-    private const string saveFileName = "saveData.json";
+    private const string saveFileName = "saveDataECO.json";
 
     private void Awake()
     {
@@ -14,7 +14,7 @@ public class Save : MonoBehaviour
         //Debug.Log(saveFilePath);
     }
     
-    public void SalvarJogo(SaveData cena)
+    public void SalvarJogo(SaveDataECO cena)
     {
         try
         {
@@ -27,14 +27,14 @@ public class Save : MonoBehaviour
         }
     }
 
-    public SaveData CarregarSave()
+    public SaveDataECO CarregarSave()
     {
         if (File.Exists(saveFilePath))
         {
             try
             {
                 string json = File.ReadAllText(saveFilePath);
-                return JsonUtility.FromJson<SaveData>(json);
+                return JsonUtility.FromJson<SaveDataECO>(json);
             }
             catch(System.Exception e) 
             {
@@ -51,5 +51,13 @@ public class Save : MonoBehaviour
     public bool VerificarSave()
     {
         return File.Exists(saveFilePath);
+    }
+
+    public void DeletarSave()
+    {
+        if (File.Exists(saveFilePath))
+        {
+            File.Delete(saveFilePath);
+        }
     }
 }
