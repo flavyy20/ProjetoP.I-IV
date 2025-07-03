@@ -91,4 +91,4 @@ MonoBehaviour:
   podeGirar: 0
   conexoesOriginais: 00000000
   usarDirecaoInicial: 1
-  direcaoFixaInicial: 0
+  direcaoFixaInicial: 1
