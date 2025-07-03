@@ -1,50 +1,47 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Direction { Up, Right, Down, Left }
 
 public class GirarPontos : MonoBehaviour
 {
     [SerializeField] private List<Direction> conexoes = new List<Direction>();
-    [SerializeField] private int posicaoX, posicaoY;
-    [SerializeField] private bool travado = false;
+    [SerializeField] private bool interativo = true;
 
-    public List<Direction> Conexoes => conexoes;
+    private RectTransform rectTransform;
 
-    public void SetarConexoes(List<Direction> novasConexoes)
+    private void Awake()
     {
-        conexoes = new List<Direction>(novasConexoes);
+        rectTransform = GetComponent<RectTransform>();
     }
 
-    public void SetarPosicao(int gridX, int gridY)
+    public void OnClick()
     {
-        posicaoX = gridX;
-        posicaoY = gridY;
-    }
+        if (!interativo) return;
 
-    public void TravarPeca()
-    {
-        travado = true;
-    }
+        rectTransform.Rotate(0, 0, -90f); // Roda 90° sentido horário
 
-    private void OnMouseDown()
-    {
-        if (travado) return;
-
-        transform.Rotate(0f, 0f, 90f);
-        ConectarRotacaoHorario();
-    }
-
-    public void ConectarRotacaoHorario()
-    {
         for (int i = 0; i < conexoes.Count; i++)
         {
-            conexoes[i] = (Direction)(((int)conexoes[i] + 3) % 4);
+            conexoes[i] = (Direction)(((int)conexoes[i] + 1) % 4); // Roda lógica também
         }
     }
 
-    public Vector2Int PosicaoGrid()
+    public void DefinirConexoes(Direction entrada, Direction saida)
     {
-        return new Vector2Int(posicaoX, posicaoY);
+        conexoes.Clear();
+        conexoes.Add(entrada);
+        conexoes.Add(saida);
+    }
+
+    public void SetarInterativo(bool ativo)
+    {
+        interativo = ativo;
+    }
+
+    public List<Direction> ObterConexoes()
+    {
+        return conexoes;
     }
 }

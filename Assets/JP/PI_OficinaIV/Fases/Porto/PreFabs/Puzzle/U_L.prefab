@@ -100,10 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678ed09cad8151f42a2a1cbf54431302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  conexoes: 0000000001000000
-  posicaoX: 0
-  posicaoY: 0
-  travado: 0
+  conexoes: 
+  interativo: 0
 --- !u!61 &-6487135476838276167
 BoxCollider2D:
   m_ObjectHideFlags: 0
