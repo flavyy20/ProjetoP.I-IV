@@ -12,9 +12,15 @@ public class CityMonitor : MonoBehaviour
     private float currentProgress = 0f;
     private Image fillImage;
 
+    public float Progress => currentProgress;
+
+    private bool isDemolished = false;
+    private Image cityImage;
+
     void Start()
     {
         fillImage = progressBar.fillRect.GetComponent<Image>();
+        cityImage = GetComponent<Image>();
         UpdateFillColor();
     }
 
@@ -25,6 +31,10 @@ public class CityMonitor : MonoBehaviour
             currentProgress += Time.deltaTime * progressSpeed;
             progressBar.value = currentProgress;
             UpdateFillColor();
+        }
+        else if (!isDemolished)
+        {
+            OnCityDemolished();
         }
     }
 
@@ -45,8 +55,26 @@ public class CityMonitor : MonoBehaviour
             fillImage.color = Color.red;
     }
 
+    void OnCityDemolished()
+    {
+        isDemolished = true;
+
+        if (cityImage != null)
+        {
+            cityImage.color = Color.red;
+        }
+
+        Debug.Log($"Cidade {cityName} foi demolida!");
+    }
+
     public void OnCityClick()
     {
+        if (isDemolished)
+        {
+            Debug.Log($"Cidade {cityName} já foi demolida. Não é possível acessar a cena.");
+            return;
+        }
+
         SceneManager.LoadScene(sceneToLoad);
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class CityManager : MonoBehaviour
 {
     public List<CityMonitor> cities;
+    public enum Level { Verde, Amarelo, Vermelho }
 
     [Range(0.2f, 1f)]
     public float mainSpeed = 0.01f;
@@ -48,5 +49,14 @@ public class CityManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+    public float GetProgress(int cityIndex)
+    {
+        if (cityIndex < 0 || cityIndex >= cities.Count)
+        {
+            Debug.LogWarning("Índice de cidade inválido.");
+            return 0f;
+        }
+        return cities[cityIndex].Progress;
     }
 }
