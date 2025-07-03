@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ public class GirarPontos : MonoBehaviour
     [SerializeField] private bool travado = false;
 
     public List<Direction> Conexoes => conexoes;
-    public bool Travado => travado;
 
     public void SetarConexoes(List<Direction> novasConexoes)
     {
@@ -33,16 +31,15 @@ public class GirarPontos : MonoBehaviour
     {
         if (travado) return;
 
-        Debug.Log($"Cano clicado na posição ({posicaoX}, {posicaoY})");
-        transform.Rotate(0f, 0f, -90f); // gira visualmente no sentido horário
-        ConectarRotacao();              // gira logicamente as conexões no sentido horário
+        transform.Rotate(0f, 0f, 90f);
+        ConectarRotacaoHorario();
     }
 
-    public void ConectarRotacao()
+    public void ConectarRotacaoHorario()
     {
         for (int i = 0; i < conexoes.Count; i++)
         {
-            conexoes[i] = (Direction)(((int)conexoes[i] + 1) % 4);
+            conexoes[i] = (Direction)(((int)conexoes[i] + 3) % 4);
         }
     }
 

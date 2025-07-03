@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,33 +25,63 @@ public class CriarGrid : MonoBehaviour
 {
     public GameObject canoRetoPrefab;
     public GameObject canoCurvoPrefab;
+    public GameObject canoInicioPrefab;
+    public GameObject canoFimPrefab;
     public GameObject fundoPrefab;
 
     public int largura;
     public int altura;
     public float espaco;
 
-    private GirarPontos[,] grid;
+    public Vector2Int pontoInicioDefinido;
+    public Vector2Int pontoFimDefinido;
+    public int minCanosIntermediarios;
 
-    private Vector2Int pontoInicio;
-    private Vector2Int pontoFim;
+    [Header("Direcoes das pontas")]
+    public Direction direcaoSaidaInicio;
+    public Direction direcaoEntradaFim;
+
+    private GirarPontos[,] grid;
 
     void Start()
     {
+        Debug.Log($"Direção saída início: {direcaoSaidaInicio}");
+        Debug.Log($"Direção entrada fim: {direcaoEntradaFim}");
+
         grid = new GirarPontos[largura, altura];
 
-        pontoInicio = GerarPosicaoNaBorda();
-        do
-        {
-            pontoFim = GerarPosicaoNaBorda();
-        } while (pontoFim == pontoInicio);
+        pontoInicioDefinido = ClampDentroDoGrid(pontoInicioDefinido);
+        pontoFimDefinido = ClampDentroDoGrid(pontoFimDefinido);
 
         CriarFundo();
-        GerarCaminhoComSolucao();
 
-        Debug.Log($"Ponto Início: {pontoInicio}, Ponto Fim: {pontoFim}");
+        List<Vector2Int> caminho;
+        int tentativas = 0;
+
+        do
+        {
+            caminho = GerarCaminhoEntre(pontoInicioDefinido, pontoFimDefinido);
+            tentativas++;
+
+            if (tentativas > 100)
+            {
+                Debug.LogError("Falha ao gerar caminho com comprimento mínimo.");
+                return;
+            }
+
+        } while (caminho.Count < minCanosIntermediarios + 2);
+
+        GerarCaminhoComSolucao(caminho);
+        Debug.Log($"Início: {pontoInicioDefinido}, Fim: {pontoFimDefinido}");
 
         ValidarConexoesGrid();
+    }
+
+    Vector2Int ClampDentroDoGrid(Vector2Int pos)
+    {
+        int x = Mathf.Clamp(pos.x, 0, largura - 1);
+        int y = Mathf.Clamp(pos.y, 0, altura - 1);
+        return new Vector2Int(x, y);
     }
 
     void CriarFundo()
@@ -65,70 +94,56 @@ public class CriarGrid : MonoBehaviour
                 GameObject fundo = Instantiate(fundoPrefab, pos, Quaternion.identity, this.transform);
 
                 var sr = fundo.GetComponent<SpriteRenderer>();
-                if (new Vector2Int(x, y) == pontoInicio)
+                if (new Vector2Int(x, y) == pontoInicioDefinido)
                     sr.color = Color.green;
-                else if (new Vector2Int(x, y) == pontoFim)
+                else if (new Vector2Int(x, y) == pontoFimDefinido)
                     sr.color = Color.red;
             }
         }
     }
 
-    void GerarCaminhoComSolucao()
+    void GerarCaminhoComSolucao(List<Vector2Int> caminho)
     {
-        List<Vector2Int> caminho = GerarCaminhoEntre(pontoInicio, pontoFim);
-
         for (int i = 0; i < caminho.Count; i++)
         {
             Vector2Int atual = caminho[i];
+
+            if (!EstaDentroDoGrid(atual))
+            {
+                Debug.LogWarning($"Ponto {atual} está fora do grid e será ignorado.");
+                continue;
+            }
+
             List<Direction> conexoes = new List<Direction>();
 
-            bool isInicio = atual == pontoInicio;
-            bool isFim = atual == pontoFim;
+            bool isInicio = i == 0;
+            bool isFim = i == caminho.Count - 1;
 
-            if (isInicio)
+            if (isInicio && i + 1 < caminho.Count)
             {
                 Vector2Int proximo = caminho[i + 1];
-                Direction dirParaProximo = ObterDirecao(atual, proximo);
-
-                // Primeiro a entrada, depois a borda
-                conexoes.Add(dirParaProximo);
-
-                if (atual.x == 0)
-                    conexoes.Add(Direction.Left);
-                else if (atual.x == largura - 1)
-                    conexoes.Add(Direction.Right);
-                else if (atual.y == 0)
-                    conexoes.Add(Direction.Down);
-                else if (atual.y == altura - 1)
-                    conexoes.Add(Direction.Up);
+                conexoes.Add(ObterDirecao(atual, proximo));
             }
-            else if (isFim)
+            else if (isFim && i - 1 >= 0)
             {
                 Vector2Int anterior = caminho[i - 1];
-                Direction dirDeAntes = ObterDirecao(atual, anterior);
-
-                // Primeiro a entrada, depois a borda
-                conexoes.Add(dirDeAntes);
-
-                if (atual.x == 0)
-                    conexoes.Add(Direction.Left);
-                else if (atual.x == largura - 1)
-                    conexoes.Add(Direction.Right);
-                else if (atual.y == 0)
-                    conexoes.Add(Direction.Down);
-                else if (atual.y == altura - 1)
-                    conexoes.Add(Direction.Up);
+                conexoes.Add(ObterDirecao(atual, anterior));
             }
-            else
+            else if (i - 1 >= 0 && i + 1 < caminho.Count)
             {
                 Vector2Int anterior = caminho[i - 1];
                 Vector2Int proximo = caminho[i + 1];
-
                 conexoes.Add(ObterDirecao(atual, anterior));
                 conexoes.Add(ObterDirecao(atual, proximo));
             }
 
-            GameObject prefab = (conexoes.Count == 1 || EhReto(conexoes)) ? canoRetoPrefab : canoCurvoPrefab;
+            GameObject prefab;
+            if (isInicio)
+                prefab = canoInicioPrefab;
+            else if (isFim)
+                prefab = canoFimPrefab;
+            else
+                prefab = (EhReto(conexoes) ? canoRetoPrefab : canoCurvoPrefab);
 
             Vector3 pos = new Vector3(atual.x * espaco, atual.y * espaco, 0);
             GameObject obj = Instantiate(prefab, pos, Quaternion.identity, this.transform);
@@ -140,102 +155,74 @@ public class CriarGrid : MonoBehaviour
             if (isInicio || isFim)
                 gp.TravarPeca();
 
-            float angulo = CalcularRotacaoAPartirDasConexoes(conexoes);
-            obj.transform.rotation = Quaternion.Euler(0f, 0f, angulo);
+            // Use a direção definida no inspector para calcular rotação, sem alterar nada
+            Direction direcaoBase = isInicio ? direcaoSaidaInicio : isFim ? direcaoEntradaFim : Direction.Up;
 
-            // Aplica rotação aleatória nas peças internas
-            if (!isInicio && !isFim)
-            {
-                int rotacoes = Random.Range(0, 4);
-                obj.transform.Rotate(0f, 0f, -90f * rotacoes);
-                for (int r = 0; r < rotacoes; r++)
-                    gp.ConectarRotacao();
-            }
+            float angulo = CalcularRotacaoAPartirDasConexoes(conexoes, direcaoBase);
+            obj.transform.rotation = Quaternion.Euler(0, 0, angulo);
 
             grid[atual.x, atual.y] = gp;
-        }
-    }
-
-    float CalcularRotacaoAPartirDasConexoes(List<Direction> conexoes)
-    {
-        if (conexoes.Count == 1)
-        {
-            return conexoes[0] switch
-            {
-                Direction.Up => 0f,
-                Direction.Right => -90f,
-                Direction.Down => -180f,
-                Direction.Left => -270f,
-                _ => 0f
-            };
-        }
-
-        if (conexoes.Count == 2)
-        {
-            Direction a = conexoes[0];
-            Direction b = conexoes[1];
-            var par = new HashSet<Direction> { a, b };
-
-            if (par.SetEquals(new[] { Direction.Left, Direction.Right }))
-                return -90f;
-
-            if (par.SetEquals(new[] { Direction.Up, Direction.Down }))
-                return 0f;
-
-            if (par.SetEquals(new[] { Direction.Up, Direction.Right }))
-                return 0f;
-
-            if (par.SetEquals(new[] { Direction.Right, Direction.Down }))
-                return -90f;
-
-            if (par.SetEquals(new[] { Direction.Down, Direction.Left }))
-                return -180f;
-
-            if (par.SetEquals(new[] { Direction.Left, Direction.Up }))
-                return -270f;
-        }
-
-        return 0f;
-    }
-
-
-    Vector2Int GerarPosicaoNaBorda()
-    {
-        bool bordaHorizontal = Random.value < 0.5f;
-
-        if (bordaHorizontal)
-        {
-            int y = (Random.value < 0.5f) ? 0 : altura - 1;
-            int x = Random.Range(0, largura);
-            return new Vector2Int(x, y);
-        }
-        else
-        {
-            int x = (Random.value < 0.5f) ? 0 : largura - 1;
-            int y = Random.Range(0, altura);
-            return new Vector2Int(x, y);
         }
     }
 
     List<Vector2Int> GerarCaminhoEntre(Vector2Int inicio, Vector2Int fim)
     {
         List<Vector2Int> caminho = new List<Vector2Int>();
+        HashSet<Vector2Int> visitados = new HashSet<Vector2Int>();
+
+        caminho.Add(inicio);
+        visitados.Add(inicio);
+
         Vector2Int atual = inicio;
-        caminho.Add(atual);
 
-        while (atual.x != fim.x)
+        System.Random rng = new System.Random();
+        int tentativas = 0;
+
+        while (atual != fim && tentativas < largura * altura * 10)
         {
-            atual.x += (fim.x > atual.x) ? 1 : -1;
-            caminho.Add(atual);
+            List<Vector2Int> vizinhos = new List<Vector2Int>();
+
+            foreach (Direction dir in System.Enum.GetValues(typeof(Direction)))
+            {
+                Vector2Int prox = atual + DirecaoUtil.ParaVetor(dir);
+                if (EstaDentroDoGrid(prox) && !visitados.Contains(prox))
+                {
+                    vizinhos.Add(prox);
+                }
+            }
+
+            if (vizinhos.Count == 0)
+            {
+                if (caminho.Count > 1)
+                {
+                    caminho.RemoveAt(caminho.Count - 1);
+                    atual = caminho[caminho.Count - 1];
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                Vector2Int escolhido = vizinhos[rng.Next(vizinhos.Count)];
+                caminho.Add(escolhido);
+                visitados.Add(escolhido);
+                atual = escolhido;
+            }
+
+            tentativas++;
         }
 
-        while (atual.y != fim.y)
-        {
-            atual.y += (fim.y > atual.y) ? 1 : -1;
-            caminho.Add(atual);
-        }
+        if (!caminho.Contains(fim)) caminho.Add(fim);
 
         return caminho;
+    }
+
+
+    bool EstaDentroDoGrid(Vector2Int pos)
+    {
+        return pos.x >= 0 && pos.x < largura && pos.y >= 0 && pos.y < altura;
     }
 
     Direction ObterDirecao(Vector2Int de, Vector2Int para)
@@ -254,6 +241,31 @@ public class CriarGrid : MonoBehaviour
                (cons.Contains(Direction.Up) && cons.Contains(Direction.Down));
     }
 
+    float CalcularRotacaoAPartirDasConexoes(List<Direction> conexoes, Direction direcaoPrefabBase)
+    {
+        if (conexoes.Count == 1)
+        {
+            Direction destino = conexoes[0];
+            int rotacoes = ((int)destino - (int)direcaoPrefabBase + 4) % 4;
+            return -90f * rotacoes;
+        }
+        else if (conexoes.Count == 2)
+        {
+            bool horizontal = conexoes.Contains(Direction.Left) && conexoes.Contains(Direction.Right);
+            bool vertical = conexoes.Contains(Direction.Up) && conexoes.Contains(Direction.Down);
+
+            if (horizontal) return -90f;
+            if (vertical) return 0f;
+
+            if (conexoes.Contains(Direction.Up) && conexoes.Contains(Direction.Right)) return 0f;
+            if (conexoes.Contains(Direction.Right) && conexoes.Contains(Direction.Down)) return -90f;
+            if (conexoes.Contains(Direction.Down) && conexoes.Contains(Direction.Left)) return -180f;
+            if (conexoes.Contains(Direction.Left) && conexoes.Contains(Direction.Up)) return -270f;
+        }
+
+        return 0f;
+    }
+
     void ValidarConexoesGrid()
     {
         for (int x = 0; x < largura; x++)
@@ -269,19 +281,28 @@ public class CriarGrid : MonoBehaviour
                 {
                     Vector2Int vizinhoPos = posAtual + DirecaoUtil.ParaVetor(dir);
 
-                    if (vizinhoPos.x < 0 || vizinhoPos.x >= largura || vizinhoPos.y < 0 || vizinhoPos.y >= altura)
+                    if (!EstaDentroDoGrid(vizinhoPos))
+                    {
+                        Debug.LogWarning($"({x},{y}) conexão para fora ({dir})");
                         continue;
+                    }
 
                     GirarPontos vizinho = grid[vizinhoPos.x, vizinhoPos.y];
-                    if (vizinho == null) continue;
+                    if (vizinho == null)
+                    {
+                        Debug.LogWarning($"({x},{y}) conecta para vazio em ({vizinhoPos})");
+                        continue;
+                    }
 
                     Direction dirOposta = DirecaoUtil.Oposta(dir);
                     if (!vizinho.Conexoes.Contains(dirOposta))
                     {
-                        Debug.LogWarning($"Peça em ({x},{y}) conecta para ({vizinhoPos.x},{vizinhoPos.y}) na direção {dir}, mas a vizinha não tem conexão oposta {dirOposta}");
+                        Debug.LogWarning($"({x},{y}) conexão {dir} sem oposta em ({vizinhoPos})");
                     }
                 }
             }
         }
+
+        Debug.Log("Validação de conexões finalizada.");
     }
 }

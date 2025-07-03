@@ -528,6 +528,9 @@ MonoBehaviour:
   largura: 5
   altura: 5
   espaco: 1
+  pontoInicio: {x: 0, y: 3}
+  pontoFim: {x: 2, y: 0}
+  minCanosIntermediarios: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
