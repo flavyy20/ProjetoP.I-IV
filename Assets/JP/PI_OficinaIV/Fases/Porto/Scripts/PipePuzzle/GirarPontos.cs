@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Direction { Up, Right, Down, Left }
+//public enum Direction { Up, Right, Down, Left }
 
 public class GirarPontos : MonoBehaviour
 {
