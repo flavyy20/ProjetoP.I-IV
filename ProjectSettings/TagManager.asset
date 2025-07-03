@@ -18,6 +18,7 @@ TagManager:
   - CinemachineTarget
   - Parede
   - UICamera
+  - Plataforma
   layers:
   - Default
   - TransparentFX

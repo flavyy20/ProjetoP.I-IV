@@ -2,6 +2,7 @@ using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
@@ -70,6 +71,13 @@ public class Personagem : MonoBehaviour
 
     void Mover()
     {
+        if (!EstaSobreNavMesh())
+        {
+            // Evita mover o personagem fora do NavMesh
+            direcaoMovimento = Vector3.zero;
+            return;
+        }
+
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         float targetSpeed = moveInput == Vector2.zero ? 0f : velMax;
 
@@ -153,5 +161,10 @@ public class Personagem : MonoBehaviour
             Gizmos.color = Color.green;
 
         Gizmos.DrawWireSphere(spherePosition, GroundedRadius);
+    }
+    bool EstaSobreNavMesh()
+    {
+        NavMeshHit hit;
+        return NavMesh.SamplePosition(transform.position, out hit, 0.5f, NavMesh.AllAreas);
     }
 }

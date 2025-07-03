@@ -9,6 +9,7 @@ public class MenuManager2 : MonoBehaviour
     public GameObject panelCidade3;
 
     public GameObject panelMissoes;
+    public GameObject panelWin;
 
     // Chamado ao clicar no botão "Ficha"
     public void AbrirFicha()
@@ -54,5 +55,9 @@ public class MenuManager2 : MonoBehaviour
     public void FecharListaMissoes()
     {
         panelMissoes.SetActive(false);
+    }
+    public void FecharWin()
+    {
+        panelWin.SetActive(false);
     }
 }
