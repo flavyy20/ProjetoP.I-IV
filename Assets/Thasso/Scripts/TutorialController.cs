@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class TutorialController : MonoBehaviour
 {
     public GameObject tutorialPanel;
-    public GameObject resgateTexto;
+    public GameObject painelResgates; // novo campo: painel com TMP_Text dentro
     public Button skipButton;
 
     void Start()
@@ -15,12 +14,22 @@ public class TutorialController : MonoBehaviour
         tutorialPanel.SetActive(true);
 
         skipButton.onClick.AddListener(FecharTutorial);
+
+        // Garante que o painel de resgate está desativado no início
+        if (painelResgates != null)
+        {
+            painelResgates.SetActive(false);
+        }
     }
 
     public void FecharTutorial()
     {
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
         tutorialPanel.SetActive(false);
-        resgateTexto.SetActive(true); 
+
+        if (painelResgates != null)
+        {
+            painelResgates.SetActive(true); // ativa painel com fundo e texto
+        }
     }
 }

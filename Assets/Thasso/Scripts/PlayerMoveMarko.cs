@@ -8,9 +8,11 @@ public class PlayerMoveMarko : MonoBehaviour
 
     private Rigidbody rb;
     private Vector3 moveDirection;
+    public Animator animator;
+    private bool estaCorrendo = false;
 
     private float timer = 0f; 
-    public float minTimeToEnter = 60f; 
+    public float minTimeToEnter = 6f; 
 
     void Start()
     {
@@ -24,6 +26,13 @@ public class PlayerMoveMarko : MonoBehaviour
 
         moveDirection = new Vector3(-moveX, 0f, -moveZ).normalized;
 
+        estaCorrendo = moveDirection.magnitude >= 0.1f;
+
+        if (animator != null)
+        {
+            animator.SetBool("Correndo", estaCorrendo);
+        }
+
         timer += Time.deltaTime;
     }
 
@@ -34,7 +43,7 @@ public class PlayerMoveMarko : MonoBehaviour
             rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
 
             Quaternion lookRotation = Quaternion.LookRotation(moveDirection);
-            Quaternion correction = Quaternion.Euler(0f, -90f, 0f);
+            Quaternion correction = Quaternion.Euler(0f, 0f, 0f);
             Quaternion targetRotation = lookRotation * correction;
 
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime));
