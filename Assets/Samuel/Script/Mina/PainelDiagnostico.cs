@@ -214,7 +214,6 @@ public class PainelDiagnostico : MonoBehaviour
        
     }
 
-    public FaseController faseCon;
     void VerificarSolucao()
     {
         

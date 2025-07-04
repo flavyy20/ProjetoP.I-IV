@@ -1095,6 +1095,7 @@ MonoBehaviour:
   cityName: Mina
   sceneToLoad: Mina
   progressBar: {fileID: 400775758}
+  indexCity: 2
 --- !u!1 &321247097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,8 +1820,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cityName: Porto
-  sceneToLoad: 
+  sceneToLoad: Porto
   progressBar: {fileID: 2101181392}
+  indexCity: 3
 --- !u!1 &697522944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2094,9 +2096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3662bfb4e3161ba46ba566c74d6ca39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  historicoPanel: {fileID: 1605680076}
-  textosFases:
-  - {fileID: 1298025635}
 --- !u!4 &792178353
 Transform:
   m_ObjectHideFlags: 0
@@ -2376,6 +2375,7 @@ MonoBehaviour:
   cityName: Marko
   sceneToLoad: fase_Marko
   progressBar: {fileID: 1484594471}
+  indexCity: 1
 --- !u!114 &986460954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2549,6 +2549,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033037989}
   m_CullTransparentMesh: 1
+--- !u!1 &1076833108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076833111}
+  - component: {fileID: 1076833110}
+  - component: {fileID: 1076833109}
+  m_Layer: 0
+  m_Name: ControladorJogo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1076833109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076833108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d30af7b1371494684aae2c07c376cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1076833110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076833108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364c9cc2a58d2584d8e60b3abe4ecb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _save: {fileID: 0}
+--- !u!4 &1076833111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076833108}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 808.30255, y: 16.671448, z: 415.8327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1084154555
 GameObject:
   m_ObjectHideFlags: 0
@@ -4519,6 +4577,7 @@ MonoBehaviour:
   panelCidade2: {fileID: 1151009291}
   panelCidade3: {fileID: 1990798376}
   panelMissoes: {fileID: 1605680076}
+  panelWin: {fileID: 0}
 --- !u!4 &1998625390
 Transform:
   m_ObjectHideFlags: 0
@@ -4847,3 +4906,4 @@ SceneRoots:
   - {fileID: 1998625390}
   - {fileID: 1830436914}
   - {fileID: 792178353}
+  - {fileID: 1076833111}

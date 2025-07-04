@@ -7,9 +7,10 @@ public class CityMonitor : MonoBehaviour
     public string cityName;
     public string sceneToLoad;
     public Slider progressBar;
+    public int indexCity;
 
-    private float progressSpeed = 0f;
-    private float currentProgress = 0f;
+    private float progressSpeed;
+    private float currentProgress;
     private Image fillImage;
 
     public float Progress => currentProgress;
@@ -22,6 +23,7 @@ public class CityMonitor : MonoBehaviour
         fillImage = progressBar.fillRect.GetComponent<Image>();
         cityImage = GetComponent<Image>();
         UpdateFillColor();
+        SaveCity(indexCity);
     }
 
     void Update()
@@ -74,7 +76,15 @@ public class CityMonitor : MonoBehaviour
             Debug.Log($"Cidade {cityName} já foi demolida. Não é possível acessar a cena.");
             return;
         }
-
+        SaveCity(indexCity);
         SceneManager.LoadScene(sceneToLoad);
+    }
+
+    public void SaveCity(int numeroCena)
+    {
+        SaveData dados = FindObjectOfType<ControlarJogo>()._save.CarregarSave() ?? new SaveData(4);
+        dados.fases[numeroCena]._progressao = currentProgress;
+        dados.fases[numeroCena]._finalizado = false;
+        FindObjectOfType<ControlarJogo>()._save.SalvarJogo(dados);
     }
 }

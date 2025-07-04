@@ -39,4 +39,5 @@ public class TempData
     public float _progressao;
     public bool _finalizado;
     public bool _faseAtual;
+    public int _numeroCidade;
 }

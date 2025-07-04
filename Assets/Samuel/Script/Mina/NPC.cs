@@ -24,14 +24,14 @@ public class NPC : MonoBehaviour
             helicoptero.IniciarResgate(transform);
         }
     }
-    FaseController faseCon;
+
     public void Resgatar()
     {
         if (!resgatado)
         {
             Debug.Log("Resgatado");
             resgatado = true;
-            faseCon.SalvarVitima();
+            
             if (GameM.instance != null)
             {
                 GameM.instance.AtualizarNPCsResgatados(1); // Notifica o GameManager corretamente
