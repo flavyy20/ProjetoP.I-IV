@@ -10,9 +10,11 @@ public class BoatMovement : MonoBehaviour
     public Transform cameraTransform;
 
     private Rigidbody rb;
-    private Vector3 moveDirection;
+    private Vector3 moveDirection, _base;
 
     public Transform moveTo;
+
+    bool comVitima;
 
     private void Awake()
     {
@@ -24,12 +26,23 @@ public class BoatMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _base = transform.position;
     }
 
     private void Update()
     {
-        agent.SetDestination(moveTo.position + moveTo.forward * 10f);
         agent.isStopped = IsAgentStopped(agent);
+
+        if (comVitima && agent.isStopped)
+        {
+            if (Vector3.Distance(transform.position, _base) < agent.stoppingDistance)
+            {
+                for (int i = 0; i < transform.childCount; i++)
+                    if (transform.GetChild(i).CompareTag("Vitima"))
+                        Destroy(transform.GetChild(i).gameObject);
+                comVitima = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -41,14 +54,21 @@ public class BoatMovement : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Vitima"))
-        if (agent.isStopped)
-        {
-            if (other.transform.parent == null)
+            if (agent.isStopped)
             {
-                other.transform.SetParent(transform);
-                other.transform.localPosition = Vector3.zero;
+                if (other.transform.parent == null)
+                {
+                    other.transform.SetParent(transform);
+                    other.transform.localPosition = Vector3.zero;
+                    comVitima = true;
+                }
+                agent.SetDestination(_base);
             }
-        }
+    }
+
+    public void SetDestination(Vector3 position)
+    {
+        if (agent.isStopped) agent.SetDestination(position);
     }
 
     private bool IsAgentStopped(NavMeshAgent agent)
