@@ -33,7 +33,7 @@ public class ControlarJogo : MonoBehaviour
     {
         if(_save.VerificarSave())
         {
-            SaveDataECO dados = _save.CarregarSave();
+            SaveData dados = _save.CarregarSave();
             for(int i = 0; i > dados.fases.Length; i++)
             {
                 if (dados != null && dados.progressao._faseAtual)
