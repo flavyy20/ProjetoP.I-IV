@@ -25,7 +25,7 @@ public class Historico : MonoBehaviour
         historicoPanel.SetActive(false);
     }
 
-    private void AtualizarHistorico()
+    /*private void AtualizarHistorico()
     {
         FaseECO[] historico = ControlarJogoECO.Instance.ObterHistoricoFases();
 
@@ -58,5 +58,5 @@ public class Historico : MonoBehaviour
                     $"Tempo: {tempoFormatado}";
             }
         }
-    }
+    }*/
 }

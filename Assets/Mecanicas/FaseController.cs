@@ -23,7 +23,7 @@ public class FaseController : MonoBehaviour
         if (!faseConcluida)
         {
             faseConcluida = true;
-            FindObjectOfType<GerenciarCenasECO>().FinalizarMapa(false, vitimasSalvas);
+            //FindObjectOfType<GerenciarCenasECO>().FinalizarMapa(false, vitimasSalvas);
             // Mostrar tela de vitória
         }
     }
@@ -34,7 +34,7 @@ public class FaseController : MonoBehaviour
         if (!faseConcluida)
         {
             faseConcluida = true;
-            FindObjectOfType<GerenciarCenasECO>().FinalizarMapa(true, vitimasSalvas);
+            //FindObjectOfType<GerenciarCenasECO>().FinalizarMapa(true, vitimasSalvas);
             // Mostrar tela de game over
         }
     }
