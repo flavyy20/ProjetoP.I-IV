@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class MovimentacaoPerso : MonoBehaviour
 {
-    public float velocidade = 5f;
-    public float alturaPulo = 7f;
-    public float gravidade = 20f;
-
-    public LayerMask layerChao;
-    public Transform checadorChao;
-    public float raioChao = 0.3f;
-
     private Animator animator;
     private Camera cam;
-    public bool correndo;
-    public bool noChao;
 
     private float velocidadeVertical = 0f;
     private Vector3 movimentoHorizontal;
+
+    public float velocidade = 5f, alturaPulo = 7f, gravidade = 20f;
+
+    public LayerMask layerChao, layerVitima;
+    public Transform checadorChao;
+    public float raioChao = 0.3f;
+    public BoatMovement bote;
+
+    public bool correndo, noChao, pertoVitima;
 
     void Awake()
     {
@@ -28,10 +27,30 @@ public class MovimentacaoPerso : MonoBehaviour
 
     void Update()
     {
+        Animacao();
         VerificarChao();
         CalcularMovimento();
         AplicarGravidadeEPulo();
         MoverPersonagem();
+
+        if (pertoVitima && Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerVitima))
+            {
+                Vector3 position = hit.collider.transform.position;
+                position.y = 0f;
+                bote.SetDestination(position);
+            }
+        }
+    }
+
+    private void Animacao()
+    {
+        if (!noChao) animator.Play("jump");
+        else if (correndo) animator.Play("run");
+        else animator.Play("idle");
     }
 
     private void CalcularMovimento()
@@ -54,23 +73,14 @@ public class MovimentacaoPerso : MonoBehaviour
 
             movimentoHorizontal = (cameraForward * inputZ + cameraRight * inputX).normalized * velocidade;
 
-            // Rotaciona o personagem
             Quaternion targetRotation = Quaternion.LookRotation(movimentoHorizontal, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
 
-            if (!correndo)
-            {
-                correndo = true;
-                animator.Play("run");
-            }
+            if (!correndo) correndo = true;
         }
         else
         {
-            if (correndo)
-            {
-                correndo = false;
-                animator.Play("idle");
-            }
+            if (correndo) correndo = false;
         }
     }
 
@@ -78,35 +88,20 @@ public class MovimentacaoPerso : MonoBehaviour
     {
         if (noChao)
         {
-            // Impede que a gravidade continue aplicando força pra baixo
-            if (velocidadeVertical < 0f)
-            {
-                velocidadeVertical = 0f; // valor negativo leve para manter contato com o chão
-            }
+            if (velocidadeVertical < 0f) velocidadeVertical = 0f;
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                velocidadeVertical = alturaPulo;
-                animator.Play("jump"); // troque para sua animação
-            }
+            if (Input.GetKeyDown(KeyCode.Space)) velocidadeVertical = alturaPulo;
         }
-        else
-        {
-            velocidadeVertical -= gravidade * Time.deltaTime;
-        }
+        else velocidadeVertical -= gravidade * Time.deltaTime;
     }
 
     private void MoverPersonagem()
     {
-        Vector3 movimentoFinal = new Vector3(movimentoHorizontal.x, velocidadeVertical, movimentoHorizontal.z);
+        Vector3 movimentoFinal = new(movimentoHorizontal.x, velocidadeVertical, movimentoHorizontal.z);
         transform.position += movimentoFinal * Time.deltaTime;
     }
 
-    private void VerificarChao()
-    {
-        // Confere se há colisão com o chão
-        noChao = Physics.CheckSphere(checadorChao.position, raioChao, layerChao);
-    }
+    private void VerificarChao() => noChao = Physics.CheckSphere(checadorChao.position, raioChao, layerChao);
 
     void OnDrawGizmosSelected()
     {
@@ -114,6 +109,24 @@ public class MovimentacaoPerso : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(checadorChao.position, raioChao);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Vitima"))
+        {
+            pertoVitima = true;
+            other.GetComponent<Outline>().enabled = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Vitima"))
+        {
+            pertoVitima = false;
+            other.GetComponent<Outline>().enabled = false;
         }
     }
 }
