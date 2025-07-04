@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class Personagem : MonoBehaviour
 {
-    [Header("Movimentação")]
+    [Header("Movimentaï¿½ï¿½o")]
     [SerializeField] float velMax = 10f;
     [SerializeField] float valorAcel = 10f;
     [SerializeField] float velRotacao = 8f;
@@ -20,7 +20,7 @@ public class Personagem : MonoBehaviour
     [SerializeField] float gravidade = -15f;
     [SerializeField] float tempoPulo = 0.2f;
 
-    [Header("Detecção de chão")]
+    [Header("Detecï¿½ï¿½o de chï¿½o")]
     [SerializeField] float GroundedOffset = 0.22f;
     [SerializeField] float GroundedRadius = 0.68f;
     [SerializeField] LayerMask GroundLayers;
@@ -61,7 +61,7 @@ public class Personagem : MonoBehaviour
             intervaloPulo = 0f;
         }
 
-        // Corrige o "quique" ao tocar o chão
+        // Corrige o "quique" ao tocar o chï¿½o
         if (estaNoChao && velocidadeY < 0f)
         {
             velocidadeY = 0f;
@@ -72,13 +72,6 @@ public class Personagem : MonoBehaviour
 
     void Mover()
     {
-        if (!EstaSobreNavMesh())
-        {
-            // Evita mover o personagem fora do NavMesh
-            direcaoMovimento = Vector3.zero;
-            return;
-        }
-
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         float targetSpeed = moveInput == Vector2.zero ? 0f : velMax;
 
@@ -118,10 +111,10 @@ public class Personagem : MonoBehaviour
     {
         if (estaNoChao)
         {
-            // Reset da velocidade vertical ao tocar o chão
+            // Reset da velocidade vertical ao tocar o chï¿½o
             velocidadeY = 0f;
 
-            // Somente pula se apertar botão e tempo estiver liberado
+            // Somente pula se apertar botï¿½o e tempo estiver liberado
             if (Input.GetButtonDown("Jump") && intervaloPulo <= 0f)
             {
                 velocidadeY = Mathf.Sqrt(alturaPulo * -2f * gravidade);
@@ -141,7 +134,7 @@ public class Personagem : MonoBehaviour
         }
         else
         {
-            // Se está no ar, aplica gravidade
+            // Se estï¿½ no ar, aplica gravidade
             float velocidadeTerminal = -30f;
             if (velocidadeY > velocidadeTerminal)
             {
@@ -162,10 +155,5 @@ public class Personagem : MonoBehaviour
             Gizmos.color = Color.green;
 
         Gizmos.DrawWireSphere(spherePosition, GroundedRadius);
-    }
-    bool EstaSobreNavMesh()
-    {
-        NavMeshHit hit;
-        return NavMesh.SamplePosition(transform.position, out hit, 0.5f, NavMesh.AllAreas);
     }
 }

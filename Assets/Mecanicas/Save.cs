@@ -45,7 +45,7 @@ public class Save : MonoBehaviour
         }
         else
         {
-            Debug.Log("Save não encontrado");
+            Debug.Log("Save nï¿½o encontrado");
         }
         return null;
     }
@@ -53,13 +53,5 @@ public class Save : MonoBehaviour
     public bool VerificarSave()
     {
         return File.Exists(saveFilePath);
-    }
-
-    public void DeletarSave()
-    {
-        if (File.Exists(saveFilePath))
-        {
-            File.Delete(saveFilePath);
-        }
     }
 }
